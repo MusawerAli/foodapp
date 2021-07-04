@@ -1,6 +1,7 @@
 
 from flask import Flask, request, jsonify, make_response   
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS,cross_origin
 # from flask.ext.sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import uuid 
@@ -9,13 +10,19 @@ import datetime
 from functools import wraps
 from sqlalchemy.sql import exists
 from sqlalchemy.exc import SQLAlchemyError  
-
+import werkzeug
+from base64 import b64encode
+from flask_socketio import SocketIO
+import json
 app = Flask(__name__) 
 
 app.config['SECRET_KEY']='Th1s1ss3cr3t'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://phpmyadmin:Root!123@127.0.0.1/foodapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True 
+cors = CORS(app)
 
+socketio = SocketIO(app, cors_allowed_origins="*")
+app.config['CORS_HEADERS'] = 'Content-Type'
 db = SQLAlchemy(app)   
 
 class Roles(db.Model):
@@ -112,25 +119,30 @@ def signup_user():
       
     if request.method == 'POST':
         data = request.get_json()
-        # checkIfUser = User.query.filter_by(email=data['email']).count()
-        hashed_password = generate_password_hash(data['password'], method='sha256')
-        print(hashed_password)
-        public_uuid = str(uuid.uuid4())
-        try:
-            new_user = Users(public_id=public_uuid, user_name=data['username'], password=hashed_password, email=data['email'],contact=data['contact'],role_id=data['role']) 
-            db.session.add(new_user)  
-            db.session.commit()
+        checkIfUser = Users.query.filter_by(email=data['email']).first()
+        role = Roles.query.filter_by(id=data['role']).first()
 
-
-        except SQLAlchemyError as e:
-
-            error = str(e.__dict__['orig'])
         
-            return jsonify({'message':error,'code':403})
-         
-        token = jwt.encode({'public_id': public_uuid, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=300)}, app.config['SECRET_KEY'], algorithm="HS256")   
+            
+        if checkIfUser == None:
+            hashed_password = generate_password_hash(data['password'], method='sha256')
+            print(hashed_password)
+            public_uuid = str(uuid.uuid4())
+            try:
+                new_user = Users(public_id=public_uuid, user_name=data['username'], password=hashed_password, email=data['email'],contact=data['contact'],role_id=data['role']) 
+                db.session.add(new_user)  
+                db.session.commit()
 
-    return jsonify({'message': 'Registration successfully','token':token,'code':200})
+
+            except SQLAlchemyError as e:
+
+                error = str(e.__dict__['orig'])
+            
+                return jsonify({'message':error,'code':403})
+            
+            token = jwt.encode({'public_id': public_uuid, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=300)}, app.config['SECRET_KEY'], algorithm="HS256")   
+            return jsonify({'message': 'Registration successfully','token':token,'user_token':role.name,'code':200})
+        return make_response('Email Already Exist',  304, {'WWW.Authentication': 'Basic realm: "login required"'})
 
 
 @app.route('/login', methods=['GET', 'POST'])  
@@ -142,14 +154,17 @@ def login_user():
       return make_response('could not verify', 401, {'WWW.Authentication': 'Basic realm: "login required"'})    
 
    user = Users.query.filter_by(email=auth['email']).first()   
-   if check_password_hash(user.password, auth['password']):  
-      token = jwt.encode({'public_id': user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=300)}, app.config['SECRET_KEY'], algorithm="HS256")  
-    
-      return jsonify({'token' : token}) 
+   if user != None:
+       if check_password_hash(user.password, auth['password']):
+            token = jwt.encode({'public_id': user.public_id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=300)}, app.config['SECRET_KEY'], algorithm="HS256")  
+            role = user.role.name
+            return jsonify({'token' : token,'user_token':role,'code':200})
+        
+ 
    #   return jsonify({'token' : token})
 
-   return make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
-
+       return make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
+   return make_response('User not Found',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
 @app.route('/checkOrders', methods=['GET', 'POST']) 
 @onlyChef
 def checkOrders(current_user):
@@ -180,6 +195,7 @@ def orderBook(current_user):
         order.isNoted = data['isNoted']
         order.isBooked = data['isBooked']
         order.total = data['total']
+        # socketio.emit('getDoctorListSocket', {'room_list': room_list})
         order.givenPaymen = data['givenPaymen']
         db.session.commit()
     except SQLAlchemyError as e:
