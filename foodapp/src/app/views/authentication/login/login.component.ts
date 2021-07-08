@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   }
   // @ViewChild("wrapper") private wrapper: ElementRef<HTMLElement>;
   public showLogin() {
+    
     this.renderer.setStyle(this.rec_prism.nativeElement, 'transform', `translateZ(-100px)`);
   //   const parentElement = this.wrapper.nativeElement;
   //   const rec_prism = parentElement.querySelector(".rec-prism");

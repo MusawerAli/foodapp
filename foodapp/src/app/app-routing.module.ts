@@ -18,8 +18,8 @@ const routes: Routes = [
 
   {
     path: "chef",
-    component: ChefComponent,
-    canActivate: [ChefGuard],
+    // component: ChefComponent,
+    // canActivate: [ChefGuard],
     loadChildren: () =>
       import("./views/chef/chef.module").then(
         (m) => m.ChefModule
@@ -29,8 +29,8 @@ const routes: Routes = [
 
   {
     path: "order",
-    component: OrderComponent,
-    canActivate: [AuthGuard],
+    // component: OrderComponent,
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import("./views/order/order.module").then(
         (m) => m.OrderModule

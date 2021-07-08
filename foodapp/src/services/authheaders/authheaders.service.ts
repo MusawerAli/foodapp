@@ -20,12 +20,15 @@ export class AuthheadersService {
   createHeader() {
     return new HttpHeaders()
         .set('Content-Type', 'application/json')
+        .set('x-access-tokens','asda sdasdasda')
         .set('Accept', 'application/json');
+       
   }
   createAuthHeader() {
     return new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
       .append('Accept', 'application/json')
+      .append('x-access-tokens','asda sdasdasda')
       .append('Authorization',this.cookieService.get('token'));
   }
   createPostHeader(/*token = null*/) {
