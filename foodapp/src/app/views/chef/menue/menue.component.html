@@ -1,9 +1,10 @@
 
-<div class="">
-  <button mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Row</button>
+<div class="" style="margin:30px;">
+  <!-- <button mat-button (click)="deleteDialog('',{})" class="deleteStyle" mat-flat-button color="primary">Remove</button> -->
+  <button mat-button (click)="openDialog('Add',{})" class="style" mat-flat-button color="primary">Add Row</button>
   <mat-form-field>
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search keyword" #input>
   </mat-form-field>
   <div class="example-container mat-elevation-z8">
   <mat-table mat-table [dataSource]="dataSource" matSort>
@@ -11,9 +12,9 @@
 
 
     <ng-container matColumnDef="id">
-      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>id</mat-header-cell>
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row">
-        <span class="mobile-label">ID:</span>
+        <span class="mobile-label"></span>
         {{row.id}}</mat-cell>
     </ng-container>
 
@@ -40,17 +41,21 @@
     </ng-container>
 
 
+    <ng-container matColumnDef="qty">
+      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>qty</mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let row">
+        <span class="mobile-label">qty:</span>
+        {{row.qty}}</mat-cell>
+    </ng-container>
 
-
-
-
+    
     <ng-container matColumnDef="action">
       <mat-header-cell mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let element" class="action-link">
-        <span class="mobile-label">Action</span>
-
-        <a class="btn btn-sm btn-danger" (click)="delete('Delete',element)">Delete</a>
-      </mat-cell>
+      <mat-cell  mat-cell *matCellDef="let element" class="action-link">
+        <span class="mobile-label">Action:</span>
+        <!-- <a (click)="editData('Update',element)">Edit</a> | -->
+        <a class="w3-button w3-red w3-round" (click)="delete('Delete',element)">Delete</a>
+      </mat-cell >
     </ng-container>
 
 

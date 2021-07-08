@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
         this.CookieService.set('user_token',data.user_token);
         this.CookieService.set('token',data.token);
         this.router.navigateByUrl("/chef");
-       }else if(data.user_token=='user'){
+       }else if(data.user_token=='employee'){
         this.CookieService.set('user_token',data.user_token);
         this.CookieService.set('token',data.token);
         this.router.navigateByUrl("/order");
@@ -155,7 +155,7 @@ export class LoginComponent implements OnInit {
         this.CookieService.set('user_token',data.user_token);
         this.CookieService.set('token',data.token);
         this.router.navigateByUrl("/chef");
-       }else if(data.user_token=='user'){
+       }else if(data.user_token=='employee'){
         this.CookieService.set('user_token',data.user_token);
         this.CookieService.set('token',data.token);
         this.router.navigateByUrl("/order");

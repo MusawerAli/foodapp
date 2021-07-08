@@ -11,14 +11,13 @@ export class AddComponent implements OnInit {
   size:any=[];
   vendor:any=[];
   type:any=[];
-  form:FormGroup;
+   form:FormGroup;
   createForm() {
     this.form = this.fb.group({
-    vendor_uuid :new FormControl('', Validators.required),
-    size_uuid :new FormControl('', Validators.required),
-    type_uuid : new FormControl('', Validators.required),
-    category_name : new FormControl('', Validators.required),
-    category_nitch : new FormControl('', Validators.required),
+    menue :new FormControl('', Validators.required),
+    description :new FormControl('', Validators.required),
+    price : new FormControl('', Validators.required),
+    qty : new FormControl('', Validators.required),
     })
   }
 
@@ -35,8 +34,10 @@ export class AddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addCategory(form_value){
-    this.dialogRef.close({action:'Add',data:form_value});
+  addMenue(form_value){
+
+ 
+     this.dialogRef.close({action:'Add',data:form_value});
   }
 
 }

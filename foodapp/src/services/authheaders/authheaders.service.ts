@@ -44,7 +44,7 @@ export class AuthheadersService {
       return new HttpHeaders()
         // .append('Content-Type', 'multipart/form-data')
         .append('Accept', 'application/json')
-        .append('Authorization',this.cookieService.get('token'));
+        .append('x-access-tokens',this.cookieService.get('token'));
     }
   }
 }

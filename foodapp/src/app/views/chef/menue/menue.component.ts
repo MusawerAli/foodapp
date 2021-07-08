@@ -21,7 +21,7 @@ export interface MenueData {
 })
 export class MenueComponent implements OnInit {
   menues:any = [];
-  displayedColumns: string[] = ['id','menue','description','price'];
+  displayedColumns: string[] = ['id','menue','description','price','action'];
   dataSource: MatTableDataSource<MenueData>;
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,13 +32,18 @@ export class MenueComponent implements OnInit {
   getMenue(){
     this.ChefService.getMenues().subscribe(
       (data) => {
-        debugger;
+      
         this.menues=data.list_of_menues;
         this.dataSource = new MatTableDataSource(this.menues);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           console.log(this.dataSource);
+          console.log(this.menues)
+      },
+      error => {
+        debugger;
       }
+      
     );
   }
   ngAfterViewInit(){
@@ -48,38 +53,48 @@ export class MenueComponent implements OnInit {
     console.log(action,obj);
     obj.action = action;
     const dialogRef = this.dialog.open(AddComponent, {
-      width: '450px',
+      width: '550px',
       data:obj
     });
 
     dialogRef.afterClosed().subscribe(result => {
 
       if(result!=undefined && result.action == 'Add'){
-        // this.addRowData(result.data);
+       
+        this.addRowData(result.data);
       }
     });
 
 
   }
+  // deleteDialog(action,obj){
+  //   debugger;
+  //   console.log("this is working");
+  // }
 
-  // addRowData(row_obj){
+  addRowData(row_obj){
+    let form_data = {
+      "menue":row_obj.menue,
+      "description":row_obj.description,
+      "qty":row_obj.qty,
+      "price":row_obj.price,
+  }
+    this.ChefService.createMenue(form_data).subscribe((data)=>{
 
-  //   this.ChefService.sendFormData(row_obj).subscribe((data)=>{
+      debugger;
+      console.log('dasda',data);
+      // if(data.success==true){
+      //   this.ToastMessageService.success('Success','Size Added Successfully');
+      //   this.ToastMessageService.successSound();
+      //   this.getSize();
+      //   this.table.renderRows();
+      // }else{
+      //   this.ToastMessageService.cancelSound();
+      //   this.ToastMessageService.error('Error','Something went wrong.');
+      // }
 
-
-  //     console.log('dasda',data);
-    //   if(data.success==true){
-    //     this.ToastMessageService.success('Success','Size Added Successfully');
-    //     this.ToastMessageService.successSound();
-    //     this.getSize();
-    //     this.table.renderRows();
-    //   }else{
-    //     this.ToastMessageService.cancelSound();
-    //     this.ToastMessageService.error('Error','Something went wrong.');
-    //   }
-
-    // },
-    // error => {
+    },
+    error => {
 
     //   if(error.status==422){
     //     console.log('errr',error);
@@ -90,23 +105,15 @@ export class MenueComponent implements OnInit {
     //     this.ToastMessageService.error('Some Server Error!','Error!');
     //   }
 
-    // },
+    },
 
-    // );
-    // var d = new Date();
-    // var obj = {
-    //   id:d.getTime(),
-    //   name:row_obj.name,
-    //   progress:d.getTime()
-    // }
+    );
+    
 
-    // const data = this.dataSource.data;
-    // data.push(row_obj);
-    // this.dataSource.data = data;
-    // this.table.renderRows();
+    
 
-//   }
-// }
+  
+}
   applyFilter(event: Event) {
 
     const filterValue = (event.target as HTMLInputElement).value;

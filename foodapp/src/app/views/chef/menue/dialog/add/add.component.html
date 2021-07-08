@@ -1,0 +1,28 @@
+<form  class="pharmacy-order" [formGroup]="form" #categoryForm="ngForm" (submit)="addMenue(form.value)" >
+   
+    <mat-form-field class="example-full-width">
+      <mat-label>Menue Name</mat-label>
+      <input matInput formControlName="menue" required >
+      <mat-error *ngIf="form.get('menue').hasError('required')">Menue is Required</mat-error>
+    </mat-form-field>    
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" required >
+      <mat-error *ngIf="form.get('description').hasError('required')">Description is Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price" required >
+        <mat-error *ngIf="form.get('price').hasError('required')">Price is Required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Qty</mat-label>
+        <input matInput formControlName="qty" required >
+        <mat-error *ngIf="form.get('qty').hasError('required')">Qty is Required</mat-error>
+      </mat-form-field>
+    
+    <button type="submit" [disabled]="!form.valid" class="w3-button w3-green w3-round">Add</button>
+    </form>
+    

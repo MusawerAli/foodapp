@@ -14,8 +14,9 @@ constructor(private http: HttpClient,
   getMenues():Observable<any>{
     return this.http.get(environment.apiUrl + 'getMenuesList',{ headers: this.AuthheadersService.createAuthHeader()});
   }
-  sendFormData(data):Observable<any>{
-    return this.http.post(environment.apiUrl + 'createMenue',data,{ headers: this.AuthheadersService.createAuthHeader()});
+  createMenue(data):Observable<any>{
+    return this.http.post(environment.apiUrl + ApiEndpoints.createMenue,data,{ headers: this.AuthheadersService.createAuthHeader()});
+
   }
 
 }
