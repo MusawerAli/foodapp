@@ -50,8 +50,8 @@ export class MessageService {
   private getToastOptions(): any {
       return {
           closeButton: true,
-          timeOut: 7000,
-          //positionClass: 'toast-top-center'
+          timeOut: 5000,
+          // positionClass: 'toast-top-center'
       };
   }
 }

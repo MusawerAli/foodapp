@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit ,ViewChild , Renderer2 } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chef',
@@ -7,8 +9,7 @@ import { Component, ElementRef, OnInit ,ViewChild , Renderer2 } from '@angular/c
 })
 export class ChefComponent implements OnInit {
   @ViewChild('mySidebar') mySidebar:ElementRef;
-//  @ViewChild('myOverlay') myOverlay:ElementRef;
-  w3_open(){
+   w3_open(){
      this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `block`);
   }
   @ViewChild('closeMenu') closeMenu:ElementRef
@@ -17,9 +18,16 @@ export class ChefComponent implements OnInit {
     this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `none`);
     this.renderer.setStyle(this.mySidebar.nativeElement,'display','none')
   }
-   
-
-  constructor(private renderer:Renderer2) { }
+  logOut(){
+    
+    this.cookieService.deleteAll();
+    this.router.navigate(["/auth"]);
+    
+  }
+  goToMenue(){
+    this.router.navigate(['/chef/chef'])
+  }
+  constructor(private renderer:Renderer2, private cookieService:CookieService,private router:Router ) { }
 
   ngOnInit(): void {
     
