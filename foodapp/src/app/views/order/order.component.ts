@@ -87,5 +87,6 @@ export class OrderComponent implements OnInit {
 
     );
   }
+  date=new Date();
 
 }

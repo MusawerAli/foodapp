@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,AfterViewInit  } from '@angular/core';
+import { Component, OnInit,ViewChild,AfterViewInit, Injectable  } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatTable } from '@angular/material/table';
@@ -6,29 +6,36 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import { ChefService } from 'src/services/chef/chef.service';
 import { AddComponent } from './dialog/add/add.component';
-
+import { inject } from '@angular/core/testing';
+import { MessageService } from 'src/services/message/message.service';
+import { Router } from '@angular/router';
 export interface MenueData {
   id:any,
   menue:any,
   description:any,
   price:any,
   qty:any,
+  preview:any,
 }
+
 @Component({
   selector: 'app-menue',
   templateUrl: './menue.component.html',
   styleUrls: ['./menue.component.css']
 })
+
 export class MenueComponent implements OnInit {
+  
   menues:any = [];
-  displayedColumns: string[] = ['id','menue','description','price','action'];
+  displayedColumns: string[] = ['id','menue','description','price','action','image'];
   dataSource: MatTableDataSource<MenueData>;
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(public dialog: MatDialog,private ChefService:ChefService) { }
+  constructor(public dialog: MatDialog,private ChefService:ChefService,private MessageService:MessageService, private router:Router) { }
   ngOnInit(){
   }
+  
   getMenue(){
     this.ChefService.getMenues().subscribe(
       (data) => {
@@ -41,7 +48,10 @@ export class MenueComponent implements OnInit {
           console.log(this.menues)
       },
       error => {
-        debugger;
+        this.MessageService.error('Warning','Session Expired');
+        this.MessageService.cancelSound();
+        this.router.navigate(["/auth"]);
+       
       }
       
     );
@@ -80,8 +90,6 @@ export class MenueComponent implements OnInit {
       "price":row_obj.price,
   }
     this.ChefService.createMenue(form_data).subscribe((data)=>{
-
-      debugger;
       console.log('dasda',data);
       // if(data.success==true){
       //   this.ToastMessageService.success('Success','Size Added Successfully');
@@ -124,4 +132,6 @@ export class MenueComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+    
+     
 }

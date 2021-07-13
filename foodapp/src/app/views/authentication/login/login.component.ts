@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
     this.AuthenticationService.login(data).subscribe((data)=>{
 
       console.log('dasda',data);
-      debugger;
+      
       if(data.code==200){
         this.MessageService.successSound();
         this.MessageService.success('Success','Login Successfully.');
@@ -146,7 +146,7 @@ export class LoginComponent implements OnInit {
     this.AuthenticationService.register(data).subscribe((data)=>{
 
       console.log('dasda',data);
-      debugger;
+      
       if(data.code==200){
         this.MessageService.successSound();
         this.MessageService.success('Success','Register Successfully.');

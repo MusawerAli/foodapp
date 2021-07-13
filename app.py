@@ -17,7 +17,7 @@ import json
 app = Flask(__name__) 
 
 app.config['SECRET_KEY']='Th1s1ss3cr3t'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://phpmyadmin:Root!123@127.0.0.1/foodapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Root!123@127.0.0.1/foodapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True 
 cors = CORS(app)
 
@@ -89,7 +89,7 @@ def token_required(f):
          current_user = Users.query.filter_by(public_id=data['public_id']).first() 
           
       except:
-         return jsonify({'message': 'token is invalid'})  
+         return make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})  
 
    
       return f(current_user, *args,  **kwargs)  
@@ -107,7 +107,7 @@ def onlyChef(f):
 
 
         if not token:
-            return jsonify({'message': 'a valid token is missing'})   
+            return make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})   
 
 
         try:
@@ -115,7 +115,7 @@ def onlyChef(f):
             current_user = Users.query.filter_by(public_id=data['public_id']).first() 
 
         except:
-            return jsonify({'message': 'token is invalid'})  
+            return make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
         if(current_user.role.name=='chef'):
             return f(current_user, *args,  **kwargs) 
         else:

@@ -35,7 +35,6 @@ export class AuthGuard implements CanActivate {
       const token = this.CookieService.get('token');
       const user_token = this.CookieService.get('user_token');
       // const currentUserGuest = this.guestService.currentUserValue;
-      debugger;
       if (token!="" && token !=undefined) {
         if(user_token=='employee'){
           return true;
