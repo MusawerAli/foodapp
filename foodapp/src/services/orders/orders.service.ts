@@ -20,4 +20,8 @@ export class OrdersService {
     orderBook(data):Observable<any>{
     return this.http.post(environment.apiUrl + ApiEndpoints.login,data,{ headers: this.getHeader.createHeader()});
   }
+
+  getMenues():Observable<any>{
+    return this.http.get(environment.apiUrl + 'getMenuesList',{ headers: this.getHeader.createAuthHeader()});
+  }
 }

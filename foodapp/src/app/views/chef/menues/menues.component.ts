@@ -31,7 +31,7 @@ export class MenuesComponent implements AfterViewInit {
     @ViewChild('timesCancel') timesCancel:ElementRef
     w3_close(){
       this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `none`);
-      this.renderer.setStyle(this.mySidebar.nativeElement,'display','none')
+      // this.renderer.setStyle(this.mySidebar.nativeElement,'display','none')
     }
      
   displayedColumns = ['id', 'name', 'progress', 'color'];

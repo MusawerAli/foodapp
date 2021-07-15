@@ -255,3 +255,15 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 .w3-hover-theme:hover {color:#fff !important; background-color:#607d8b !important}
 .w3-hover-text-theme:hover {color:#607d8b !important}
 .w3-hover-border-theme:hover {border-color:#607d8b !important}
+
+
+
+@font-face {
+    font-family: 'segoe';
+    src: url(assets/fonts/segoe-ui-4-cufonfonts/Segoe-UI.ttf);
+    font-style: normal;
+}
+h1,h2,h3,h4,h5,h6,div,p,span{
+    font-family: 'Segoe UI';
+    font-size: 16px;
+}
