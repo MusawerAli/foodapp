@@ -77,15 +77,15 @@
           <div class="card" style="width:350px;margin:10px;" *ngFor="let menue of menues">
             <img class="card-img-top" src="" alt="Card image" style="width:100%">
             <div class="card-body">
-              <h4 class="card-title">{{menue.menue}}</h4>
-              <p class="card-text">{{menue.description}}</p>
-              <span style="float: left;">
+              <h2 class="card-title">{{menue.menue}}:</h2>
+              <p class="card-text">Description: {{menue.description}}</p>
+              <!-- <span style="float: left;">
               
-              </span>
+              </span> -->
               <span style="float: right;">
                 <div class="counter">
                   <span class="down" (click)='decreaseCount(menue)'>-</span>
-                  <input type="text" value="{{menue.value}}" >
+                  <input type="text"  value={{menue.value}} >
                   <span class="up" (click)='increaseCount(menue)'>+</span>
                 </div>
               </span>
@@ -121,14 +121,14 @@
         <div class="container">
           <p style="text-align: center;font-size: 17px;">Cart<i class="fa fa-shopping-cart"></i></p>
           <hr>
-          <p><a href="#" style="color: rgb(44, 180, 235);" >Product 1</a> <span class="price">$15</span></p>
-          <p><a href="#" style="color: rgb(44, 180, 235);" >Product 2</a> <span class="price">$5</span></p>
-          <p><a href="#" style="color: rgb(44, 180, 235);" >Product 3</a> <span class="price">$8</span></p>
-          <p><a href="#" style="color: rgb(44, 180, 235);" >Product 4</a> <span class="price">$2</span></p>
+          <p><a href="#" style="color: rgba(43, 89, 173);" >Product 1</a> <span class="price">$15</span></p>
+          <p><a href="#" style="color: rgba(43, 89, 173);" >Product 2</a> <span class="price">$5</span></p>
+          <p><a href="#" style="color: rgba(43, 89, 173);" >Product 3</a> <span class="price">$8</span></p>
+          <p><a href="#" style="color: rgba(43, 89, 173);" >Product 4</a> <span class="price">$2</span></p>
           <hr>
           <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
         </div>
-       <a href="" class="btn btn-success m-3">Checkout</a>
+       <a href="" class="w3-button w3-green w3-round m-3" style="padding: 7px;">Checkout</a>
       </div>
 
 

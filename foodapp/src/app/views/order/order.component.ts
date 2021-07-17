@@ -7,7 +7,10 @@ import { MessageService } from 'src/services/message/message.service';
 import { Router } from "@angular/router";
 import { OrdersService } from 'src/services/orders/orders.service';
 
-
+// import { HttpClient } from '@angular/common/http';
+// import { environment } from 'src/environments/environment';
+// import {  Observable } from 'rxjs';
+// import { AuthheadersService } from 'src/services/authheaders/authheaders.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -20,6 +23,8 @@ export class OrderComponent implements OnInit {
   value:any;
   qty=0;
   
+
+
   order() {
     this.orderForm = this.fb.group({
     order :new FormControl('', Validators.required),
@@ -32,31 +37,29 @@ export class OrderComponent implements OnInit {
   ) {
 
     this.order();
-    debugger;
+    // debugger;
     this.menues = JSON.parse(localStorage.getItem('list_of_menues'));
-   
     // this.getMenue();
     
   }
-  // getMenue(){
-  //   this.OrdersService.getMenues().subscribe(
-  //     (data) => {
-  //      console.log(data)
-  //     //  this.menues=
-  //       this.menues=data.list_of_menues;
-  //       // localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
-  //       localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
-  //               console.log(localStorage.getItem('list_of_menues'))
-  //     },
-  //     error => {
-  //       this.MessageService.error('Warning','Session Expired');
-  //       this.MessageService.cancelSound();
-  //       this.router.navigate(["/auth"]);
+  getMenue(){
+    // this.OrdersService.getMenues().subscribe(
+    //   (data) => {
+    //    console.log(data)
+    //   //  this.menues=
+    //     this.menues=data.list_of_menues;
+    //     // localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
+    //     localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
+    //             console.log(localStorage.getItem('list_of_menues'))
+    //   },
+    //   error => {
+    //     this.MessageService.error('Warning','Session Expired');
+    //     this.MessageService.cancelSound();
+    //     this.router.navigate(["/auth"]);
        
-  //     }
-      
-  //   );
-  // }
+    //   }
+    // );
+  }
   ngOnInit(): void {
     this.CommonService.myOrdersSockets().subscribe((data)=>{
 
@@ -115,13 +118,14 @@ export class OrderComponent implements OnInit {
   }
   
    increaseCount(menue) {
-     debugger
+    //  debugger
     menue.value += 1;
     let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
       let data = ss.filter(x => x.id== menue.id);
 
       data[0].value = menue.value
-
+      localStorage.setItem('value',this.menues.value)
+      
 
     
   }
@@ -129,6 +133,8 @@ export class OrderComponent implements OnInit {
    decreaseCount(menue) {
       if(menue.value<=0){
         menue.value;
+
+        
       }  
       else{
         menue.value -=1;

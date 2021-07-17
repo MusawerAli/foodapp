@@ -1,7 +1,7 @@
 
 <div class="" style="margin:30px;">
   <!-- <button mat-button (click)="deleteDialog('',{})" class="deleteStyle" mat-flat-button color="primary">Remove</button> -->
-  <button mat-button (click)="openDialog('Add',{})" class="style" mat-flat-button color="primary">Add Row</button>
+  <a mat-button (click)="openDialog('Add',{})" class="style w3-button w3-green w3-round" mat-flat-button color="primary">Add Row</a>
   <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search keyword" #input>
@@ -59,7 +59,7 @@
         <mat-cell  mat-cell *matCellDef="let element" class="action-link">
           <span class="mobile-label">Action:</span>
           <!-- <a (click)="editData('Update',element)">Edit</a> | -->
-          <a class="w3-button w3-red w3-round" (click)="delete('Delete',element)">Delete</a>
+          <a class="w3-button w3-red w3-round"  (click)="delete('Delete',element)">Delete</a>
         </mat-cell >
       </ng-container>
      
