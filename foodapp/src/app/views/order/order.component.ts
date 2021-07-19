@@ -6,11 +6,6 @@ import { MessageService } from 'src/services/message/message.service';
 
 import { Router } from "@angular/router";
 import { OrdersService } from 'src/services/orders/orders.service';
-
-// import { HttpClient } from '@angular/common/http';
-// import { environment } from 'src/environments/environment';
-// import {  Observable } from 'rxjs';
-// import { AuthheadersService } from 'src/services/authheaders/authheaders.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -20,8 +15,10 @@ export class OrderComponent implements OnInit {
   menues:any = [];
   orderForm:FormGroup;
   myOrders:any=[];
+  local_cart:any = [];
   value:any;
   qty=0;
+
   
 
 
@@ -35,11 +32,12 @@ export class OrderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,private CookieService:CookieService,private OrdersService:OrdersService,private router:Router,private renderer: Renderer2,private MessageService:MessageService,private CommonService:CommonserviceService
   ) {
-
+  
+   
     this.order();
     // debugger;
     this.menues = JSON.parse(localStorage.getItem('list_of_menues'));
-    // this.getMenue();
+    //  this.getMenue();
     
   }
   getMenue(){
@@ -61,9 +59,13 @@ export class OrderComponent implements OnInit {
     // );
   }
   ngOnInit(): void {
+    this.local_cart = JSON.parse(localStorage.getItem('cart'));
+    debugger
     this.CommonService.myOrdersSockets().subscribe((data)=>{
 
        this.myOrders = data.myOrders
+       this.getSum(this.myOrders);
+      
      })
   }
 
@@ -78,7 +80,7 @@ export class OrderComponent implements OnInit {
     this.OrdersService.orderBook(data).subscribe((data)=>{
 
       console.log('dasda',data);
-      debugger;
+      //debugger;
       if(data.code==200){
         this.MessageService.successSound();
         this.MessageService.success('Success','Login Successfully.');
@@ -107,39 +109,102 @@ export class OrderComponent implements OnInit {
     error => {
       this.MessageService.cancelSound();
       this.MessageService.error('Error','Email Already Exist.');
-      // if(error.status==422){
-      //   console.log('errr',error);
-      //   this.ToastMessageService.error(error.error.errors.category_name,'Error');
-      // }else{
-      //   this.ToastMessageService.error('Some Server Error!','Error!');
-      // }
+      
     },
     );
   }
   
    increaseCount(menue) {
-    //  debugger
+        let dat = JSON.parse(localStorage.getItem('cart'));
+        let obj:any=  {};
+        let cart:any=[];
+        let qty = menue.value+1;
+        obj['description'] = menue.description;
+        obj['id'] = menue.id;
+        obj['menue'] = menue.menue;
+        obj['price'] = menue.price*qty;
+        obj['qty'] = qty;
+      if(dat==null){
+        cart.push(obj)
+        
+        localStorage.setItem('cart',JSON.stringify(cart))
+        this.local_cart = cart;
+      }else{
+        let chk_if = dat.filter(a=>a.id===menue.id);
+      if(chk_if.length==0){
+          dat.push(obj);
+      }else{
+
+        let qty = menue.value+1;
+        chk_if[0].qty = qty;
+        chk_if[0].price = qty*menue.price;
+      
+        localStorage.setItem('cart',JSON.stringify(chk_if))
+        // this.local_cart = dat;
+      
+      }
+    
+   
+    localStorage.setItem('cart',JSON.stringify(dat))
+    this.local_cart = dat;
+  }
+  
     menue.value += 1;
     let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
       let data = ss.filter(x => x.id== menue.id);
 
-      data[0].value = menue.value
-      localStorage.setItem('value',this.menues.value)
+      data[0].value = menue.value;
+      localStorage.setItem('value',menue.value)
       
 
     
   }
   
    decreaseCount(menue) {
+
+
+    
+
+
+
+    
+     
+
+
+    
       if(menue.value<=0){
         menue.value;
 
+
+      let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
+      let data = ss.filter(x => x.id== menue.id);
+
+      data[0].value = menue.value;
+      // localStorage.setItem('value',this.menues.value)
+    
+
+      localStorage.setItem('cart',menue.value)
         
       }  
       else{
         menue.value -=1;
+        let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
+      let data = ss.filter(x => x.id== menue.id);
+
+      data[0].value = menue.value;
+      // localStorage.setItem('value',this.menues.value)
+      localStorage.setItem('value',menue.value)
       }
     
-  }   
+  }  
+  
+  
+getSum(array){
+  return array.reduce((accum,item) => accum + item.price, 0);
+}
   
 }
+
+// function price(price: any, arg1: string) {
+//   throw new Error('Function not implemented.');
+// }

@@ -40,3 +40,19 @@ html, body, h1, h2, h3, h4, h5 {
     color: #4caf50;
     user-select: none;
 }
+.qty{
+  margin-left: 15px;
+  color: rgba(43, 89, 173);
+}
+/* table tr th{
+  border: 1px solid grey;
+} */
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+.checkout{
+  height: 200px;  
+  overflow: auto;
+}

@@ -28,7 +28,7 @@ export class MenuesComponent implements AfterViewInit {
        this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `block`);
     }
     @ViewChild('closeMenu') closeMenu:ElementRef
-    @ViewChild('timesCancel') timesCancel:ElementRef
+    // @ViewChild('timesCancel') timesCancel:ElementRef
     w3_close(){
       this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `none`);
       // this.renderer.setStyle(this.mySidebar.nativeElement,'display','none')
