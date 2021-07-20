@@ -52,7 +52,21 @@ td, th {
   text-align: left;
   padding: 8px;
 }
-.checkout{
+/* .checkout{
   height: 200px;  
   overflow: auto;
+} */
+.anchor{
+  float: right;
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+}
+.headerImage{
+  width: 100%;
+  height: 180px;
+  background-image: url(src/assets/images/we-serve.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-origin: content-box;
 }

@@ -3,23 +3,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body class="w3-theme-l5" >
-
-<!-- Navbar -->
-<div class="w3-top">
- <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-
-
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
-    <img src="" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-  </a>
- </div>
+<body class="w3-theme-l5">
+<div class="w3-bar w3-top w3-black w3-large" id="menuBars"   >
+  <span class="w3-bar-item w3-right"><a href="" style="text-decoration: none;">Food App</a></span>
 </div>
 
 
-
 <!-- Page Container -->
-<div class="w3-container w3-content" style="max-width:1400px;margin-top: 80px;">
+<div class="w3-container w3-content" style="max-width:1400px;padding-top: 60px;background-color: #f1f1f1;">
   <!-- The Grid -->
   <div class="w3-row">
     <!-- Left Column -->
@@ -28,7 +19,7 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
          <h4 class="w3-center">My Profile</h4>
-         <p class="w3-center"><img src="" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center"><img src=""  style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
@@ -73,8 +64,15 @@
     <!-- Middle Column -->
     <div class="w3-col m7 ">
       <div class="container">
+
+
+        <div class="headerImage" >
+
+        </div>
+
+
         <div class="row" >
-          <div class="card" style="width:350px;margin:10px;" *ngFor="let menue of menues">
+          <div class="card" style="width:350px;margin:17px;" *ngFor="let menue of menues">
             <img class="card-img-top" src="https://i.ytimg.com/vi/o6W_mNZkBxw/maxresdefault.jpg" alt="Card image" style="width:100%">
             <div class="card-body">
               <h2 class="card-title">{{menue.menue}}:</h2>
@@ -105,38 +103,34 @@
         </div>
        <a href="" class="w3-button w3-green w3-round m-3" style="padding: 7px;">Checkout</a>
       </div> -->
-      <div *ngIf="local_cart.length!=0" class=" w3-card w3-round w3-white mt-3 checkout" >
-        <table class="w3-table-all ">
-          <tr>
-            <th>Menue</th>            
-            <th>Qty</th>
-            <th>Total</th>
-          </tr>
-          <tbody style="height: 50vh; overflow: auto;">
-            <tr *ngFor="let cart of local_cart">
-              <td>{{cart.menue}}</td>
-              <td>{{cart.qty}}</td>
-              <td>{{cart.price}}</td>
+      <div *ngIf="local_cart.length!=0" class=" w3-card w3-round w3-white  checkout" >
+        <div style="background-color:#002360">
+          <p style="font-size: 20px;display: inline-block; margin: 9px;color: white;">Cart<i class="fa fa-shopping-cart"></i></p>
+          <a href="" class="w3-button w3-round w3-white anchor" >Checkout</a>
+        </div>
+        <div >
+          <table class="w3-table-all" >
+            <thead>
+              <tr>
+                <th>Menue</th>            
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cart of local_cart">
+                <td>{{cart.menue}}</td>
+                <td>{{cart.qty}}</td>
+                <td>{{cart.price}}</td>
+              </tr>
+            </tbody>            
+            <tr >
+              <th colspan="2">Grand Total</th>
+              <th>2000</th>
             </tr>
-            <tr *ngFor="let cart of local_cart">
-              <td>{{cart.menue}}</td>
-              <td>{{cart.qty}}</td>
-              <td>{{cart.price}}</td>
-              
-            </tr>
-          </tbody>
-          
-          <tr >
-            <th colspan="2">Total</th>
-            <th>2000</th>
-          </tr>
-        </table>
-      </div>  
-      <div>
-          <a href="" class="w3-button w3-green w3-round m-3" style="padding: 7px;">Checkout</a>
+          </table>
+        </div>        
       </div>
-      
-
       <div class="w3-card w3-round w3-white w3-center w3-hide-small mt-3">
         <div class="w3-container">
           <p>Notifications:</p>
@@ -145,7 +139,9 @@
           <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
         </div>
       </div>
-      <br>
+      <div class="w3-card w3-round w3-white w3-padding-16 w3-center mt-3">
+        <p>ADS</p>
+      </div>
       <br>
     <!-- End Right Column -->
     </div>

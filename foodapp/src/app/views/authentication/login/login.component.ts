@@ -21,6 +21,15 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,private AuthenticationService:AuthenticationService,private CookieService:CookieService,private router:Router,private renderer: Renderer2,private MessageService:MessageService) {
     this.login();
     this.register();
+    debugger;
+    if(this.CookieService.check('user_token')==true){
+      let user_token = this.CookieService.get('user_token');
+      if(user_token=="employee"){
+        this.router.navigateByUrl('/order');
+      }else{
+        this.router.navigateByUrl('/chef');
+      }
+    }
   }
   // @ViewChild("wrapper") private wrapper: ElementRef<HTMLElement>;
   public showLogin() {
@@ -88,7 +97,7 @@ export class LoginComponent implements OnInit {
       'role':value.role
     }
 
-    console.log(data);
+    // console.log(data);
     this.AuthenticationService.login(data).subscribe((data)=>{
 
       console.log('dasda',data);

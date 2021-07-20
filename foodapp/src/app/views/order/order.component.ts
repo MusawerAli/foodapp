@@ -60,7 +60,6 @@ export class OrderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.local_cart = JSON.parse(localStorage.getItem('cart'));
-    debugger
     this.CommonService.myOrdersSockets().subscribe((data)=>{
 
        this.myOrders = data.myOrders
@@ -160,51 +159,26 @@ export class OrderComponent implements OnInit {
     
   }
   
-   decreaseCount(menue) {
-
-
-    
-
-
-
-    
-     
-
-
-    
-      if(menue.value<=0){
-        menue.value;
-
-
+  decreaseCount(menue) {    
+    if(menue.value<=0){
+      menue.value;
       let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
       let data = ss.filter(x => x.id== menue.id);
-
       data[0].value = menue.value;
-      // localStorage.setItem('value',this.menues.value)
-    
-
       localStorage.setItem('cart',menue.value)
-        
-      }  
-      else{
-        menue.value -=1;
-        let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
-      let data = ss.filter(x => x.id== menue.id);
-
-      data[0].value = menue.value;
-      // localStorage.setItem('value',this.menues.value)
-      localStorage.setItem('value',menue.value)
-      }
-    
+    }  
+    else{
+    menue.value -=1;
+    let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
+    let data = ss.filter(x => x.id== menue.id);
+    data[0].value = menue.value;
+    localStorage.setItem('value',menue.value)
+    }    
   }  
-  
-  
-getSum(array){
-  return array.reduce((accum,item) => accum + item.price, 0);
+  getSum(array){
+    return array.reduce((accum,item) => accum + item.price, 0);
+  }  
 }
-  
-}
-
 // function price(price: any, arg1: string) {
 //   throw new Error('Function not implemented.');
 // }
