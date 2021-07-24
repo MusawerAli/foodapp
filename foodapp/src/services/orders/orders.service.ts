@@ -17,8 +17,8 @@ export class OrdersService {
   constructor(private http: HttpClient,
     private getHeader: AuthheadersService) { }
 
-    orderBook(data):Observable<any>{
-    return this.http.post(environment.apiUrl + ApiEndpoints.login,data,{ headers: this.getHeader.createHeader()});
+    bookOrder(data):Observable<any>{
+    return this.http.post(environment.apiUrl + ApiEndpoints.bookOrder,data,{ headers: this.getHeader.createAuthHeader()});
   }
 
   getMenues():Observable<any>{

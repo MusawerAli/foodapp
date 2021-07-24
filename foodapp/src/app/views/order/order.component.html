@@ -10,7 +10,7 @@
 
 
 <!-- Page Container -->
-<div class="w3-container w3-content" style="max-width:1400px;padding-top: 60px;background-color: #f1f1f1;">
+<div class="w3-container w3-content w3-round" style=" opacity: 0.85; max-width:1400px;padding-top: 60px;background-color: #f1f1f1;">
   <!-- The Grid -->
   <div class="w3-row">
     <!-- Left Column -->
@@ -73,14 +73,25 @@
 
         <div class="row" >
           <div class="card" style="width:350px;margin:17px;" *ngFor="let menue of menues">
-            <img class="card-img-top" src="https://i.ytimg.com/vi/o6W_mNZkBxw/maxresdefault.jpg" alt="Card image" style="width:100%">
+
+            <img class="card-img-top" src="data:image/jpeg;base64,{{menue.picture}}" alt="Card image" style="width:100%">
             <div class="card-body">
               <h2 class="card-title">{{menue.menue}}:</h2>
-              <p class="card-text">Description: {{menue.description}}</p>
+
+              <p class="card-text"><b>Description</b>: {{menue.description}}</p>
+              <p class="card-text w3-row">
+                <span class="w3-col l6">
+                  <b>Per:</b> {{ menue.qty }}
+                </span>
+                <span class="w3-col l6">
+                  <b>Price:</b> {{ menue.price }} PKR
+                </span>
+              </p>
+
               <span style="float: right;">
                 <div class="counter">
                   <span class="down" (click)='decreaseCount(menue)'>-</span>
-                  <input type="text"  value={{menue.value}} >
+                  <input type="text"  value="{{menue.qty}}">
                   <span class="up" (click)='increaseCount(menue)'>+</span>
                 </div>
               </span>
@@ -103,16 +114,16 @@
         </div>
        <a href="" class="w3-button w3-green w3-round m-3" style="padding: 7px;">Checkout</a>
       </div> -->
-      <div *ngIf="local_cart.length!=0" class=" w3-card w3-round w3-white  checkout" >
+      <div *ngIf="local_cart!=null && local_cart.length!=0" class=" w3-card w3-round w3-white  checkout" >
         <div style="background-color:#002360">
           <p style="font-size: 20px;display: inline-block; margin: 9px;color: white;">Cart<i class="fa fa-shopping-cart"></i></p>
-          <a href="" class="w3-button w3-round w3-white anchor" >Checkout</a>
+          <a  (click)="checkout()" class="w3-button w3-round w3-white anchor" >Checkout</a>
         </div>
         <div >
           <table class="w3-table-all" >
             <thead>
               <tr>
-                <th>Menue</th>            
+                <th>Menue</th>
                 <th>Qty</th>
                 <th>Total</th>
               </tr>
@@ -123,13 +134,13 @@
                 <td>{{cart.qty}}</td>
                 <td>{{cart.price}}</td>
               </tr>
-            </tbody>            
+            </tbody>
             <tr >
               <th colspan="2">Grand Total</th>
-              <th>2000</th>
+              <th>{{ total }}</th>
             </tr>
           </table>
-        </div>        
+        </div>
       </div>
       <div class="w3-card w3-round w3-white w3-center w3-hide-small mt-3">
         <div class="w3-container">
@@ -182,3 +193,58 @@ function openNav() {
 
 </body>
 </html>
+
+<ng-template #template>
+  <div class="modal-header">
+    Please Confirm your order and initial amount
+  </div>
+  <div class="modal-body">
+    <table class="w3-table-all" >
+      <thead>
+        <tr>
+          <th>Menue</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cart of local_cart">
+          <td>{{cart.menue}}</td>
+          <td>{{cart.qty}}</td>
+          <td>{{cart.price}}</td>
+        </tr>
+      </tbody>
+      <tr >
+        <th colspan="2">Grand Total</th>
+        <th>{{ total }}</th>
+      </tr>
+    </table>
+
+
+      <form [formGroup]="form" #orderForm="ngForm" (submit)="sendOrder(form.value)" >
+        <div class="w3-container">
+          <div class="w3-row">
+          <div class="w3-col l12 s12 m12">
+          <mat-form-field class="example-full-width" [style.width.px]=327>
+          <mat-label>Min Initial Amount is:{{ total }}</mat-label>
+          <input  matInput  formControlName="initialAmount"  maxlength="4" placeholder="Min Rs:{{ total }}">
+          <mat-error *ngIf="form.get('initialAmount').hasError('required')">Intital amount required</mat-error>
+          <mat-error *ngIf="form.get('initialAmount').hasError('min')">Minimum {{ total}} initial deposit required </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="w3-col l12 s12 m12 w3-padding-16">
+        <button type="submit" [disabled]="!form.valid" class="btn btn-primary">confirm</button>
+      </div>
+    </div>
+  </div>
+      </form>
+
+
+
+  </div>
+
+  <div class="modal-footer">
+
+  </div>
+</ng-template>

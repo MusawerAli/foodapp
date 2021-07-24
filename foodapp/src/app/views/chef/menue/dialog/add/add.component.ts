@@ -47,7 +47,7 @@ export class AddComponent implements OnInit {
   //selectedFile:imageSnippet;
   
   imageUpload(imageInput:any){
-    
+    debugger;
     var files = imageInput.files[0];
     
 

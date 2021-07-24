@@ -22,11 +22,11 @@ export class AuthheadersService {
         .set('Content-Type', 'application/json')
         .set('x-access-tokens','asda sdasdasda')
         .set('Accept', 'application/json');
-       
+
   }
   createAuthHeader() {
     return new HttpHeaders()
-      .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Content-Type', 'application/json')
       .append('Accept', 'application/json')
       .append('x-access-tokens',this.cookieService.get('token'));
   }

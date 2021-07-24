@@ -9,19 +9,19 @@
         <mat-label>Menue Name</mat-label>
         <input matInput formControlName="menue" required >
         <mat-error *ngIf="form.get('menue').hasError('required')">Menue is Required</mat-error>
-      </mat-form-field>    
+      </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" required >
         <mat-error *ngIf="form.get('description').hasError('required')">Description is Required</mat-error>
       </mat-form-field>
-  
+
       <mat-form-field class="example-full-width">
           <mat-label>Price</mat-label>
           <input matInput formControlName="price" required >
           <mat-error *ngIf="form.get('price').hasError('required')">Price is Required</mat-error>
       </mat-form-field>
-  
+
       <mat-form-field class="example-full-width">
           <mat-label>Qty</mat-label>
           <input matInput formControlName="qty" required >
@@ -32,13 +32,13 @@
         <!-- <mat-label>file</mat-label> -->
         <input matInput >
         <input #imageInput  formControlName="file" type="file" accept="image/*"   (change)="imageUpload(imageInput)">
-      </mat-form-field>    
+      </mat-form-field>
       <!-- <input #imageInput formControlName="file" type="file" accept="image/*"   (change)="imageUpload(imageInput)">-->
     </form>
     <span>
-      
-      
+
+
     </span>
     <button type="submit" [disabled]="!form.valid" class="w3-button w3-green w3-round" style="text-align:right ;width: 70%; text-align: center; margin-top: 30px;">Add</button>
   </div>
-</div>    
+</div>

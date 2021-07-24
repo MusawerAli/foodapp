@@ -15,9 +15,9 @@ from base64 import b64encode
 from flask_socketio import SocketIO
 import json
 app = Flask(__name__) 
-
+from sqlalchemy import LargeBinary
 app.config['SECRET_KEY']='Th1s1ss3cr3t'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Root!123@127.0.0.1/foodapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://phpmyadmin:Root!123@127.0.0.1/foodapp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True 
 cors = CORS(app)
 
@@ -52,13 +52,14 @@ class Menues(db.Model):
     description = db.Column(db.String(250))
     price = db.Column(db.Float())
     qty = db.Column(db.Integer())
+    picture = db.Column(LargeBinary(length=65536),nullable=True)
 
 
 
 
 class Orders(db.Model):
     __tablename__ = 'orders'  
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     order = db.Column(db.Text(), unique=False, nullable=False)   
     isNoted = db.Column(db.Integer(),nullable=False,default=0) 
     isBooked = db.Column(db.Integer(),nullable=False,default=0)
@@ -68,6 +69,18 @@ class Orders(db.Model):
     creater_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
     date = db.Column(db.DateTime(), nullable=True)
     users = db.relationship("Users", backref=db.backref("users", uselist=False))
+
+
+class OrderDetail(db.Model):
+    __tablename__ = 'order_detail'  
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer(), db.ForeignKey('orders.id'))
+    menue_id = db.Column(db.Integer(), db.ForeignKey('menues.id'))
+    qty = db.Column(db.Integer(),nullable=False,default=0)
+    price = db.Column(db.Float(),nullable=False,default=0)
+    total = db.Column(db.Float(),nullable=False,default=0)
+    employee_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
+    date = db.Column(db.DateTime(), nullable=True)
    
 
 def token_required(f):
@@ -221,7 +234,7 @@ def orderBook(current_user):
 def createMenue(current_user):
     data = request.get_json()
     try:
-        create_menues = Menues(menue=data['menue'],description=data['description'],qty=data['qty'],price=data['price'])
+        create_menues = Menues(menue=data['menue'],description=data['description'],qty=data['qty'],price=data['price'],picture=data['picture'])
         db.session.add(create_menues)  
         db.session.commit()
     except SQLAlchemyError as e:
@@ -235,15 +248,45 @@ def createMenue(current_user):
 @app.route('/bookOrder', methods=['GET', 'POST']) 
 @token_required
 def bookOrder(current_user):
-    data = request.get_json()
+    req_data = request.get_json()
+    data = json.loads(req_data['cart'])
+    initialAmount = json.loads(req_data['initialAmount'])
+    date = req_data['date']
+    orders_entries = []
     try:
-        create_order = Orders(order=data['order'],isNoted=0,isBooked=0,total=0,givenPayment=0,role_id=current_user.role_id,creater_id=current_user.id,date='2021-06-21')
-        db.session.add(create_order)  
+        create_order = Orders(order=json.dumps([(i['menue']) for i in data]),isNoted=0,isBooked=0,total=0,givenPayment=initialAmount,role_id=current_user.role_id,creater_id=current_user.id,date=date)
+        db.session.add(create_order) 
+        db.session.flush()
+        for item in data:
+            menue_id = item['id']
+            price = item['price']
+            total = item['total']
+            qty = item['qty']
+            order_id = create_order.id
+            date = date
+            new_entry = OrderDetail(menue_id=menue_id,price=price,qty=qty,total=total,employee_id=current_user.id,date=date,order_id=order_id)
+
+            orders_entries.append(new_entry)
+        
+
+    
+        db.session.add_all(orders_entries)
         db.session.commit()
     except SQLAlchemyError as e:
+        db.session.rollback()
+        db.session.flush()
         error = str(e.__dict__['orig'])
-        
         return jsonify({'message':error,'code':403})
+
+        
+    # try:
+    #     create_order = Orders(order=data['order'],isNoted=0,isBooked=0,total=0,givenPayment=0,role_id=current_user.role_id,creater_id=current_user.id,date='2021-06-21')
+    #     db.session.add(create_order)  
+    #     db.session.commit()
+    # except SQLAlchemyError as e:
+    #     error = str(e.__dict__['orig'])
+        
+    #     return jsonify({'message':error,'code':403})
     return jsonify({'message': 'Order Created successfully','code':200})
 
 @app.route('/getMenuesList', methods=['GET', 'POST']) 
@@ -259,10 +302,13 @@ def getMenuesList(current_user):
         menue_data['id'] = menue.id 
         menue_data['price'] = menue.price  
         menue_data['description'] = menue.description
+        menue_data['qty'] = menue.qty
+        menue_data['picture'] = b64encode(menue.picture).decode('utf-8')
         
         output.append(menue_data)  
     return jsonify({'list_of_menues' : output})
-    
+
+  
 
 if  __name__ == '__app__':  
      app.run(debug=True) 

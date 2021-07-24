@@ -20,10 +20,10 @@ import { environment } from 'src/environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-
+import { ModalModule } from "ngx-bootstrap/modal";
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
-
+import { TabsModule } from "ngx-bootstrap/tabs";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
 @NgModule({
@@ -34,6 +34,8 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ModalModule.forRoot(),
+    TabsModule.forRoot(),
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
@@ -50,6 +52,7 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
     MatInputModule,
     MatButtonModule,
     HttpClientModule,
+    NgxSpinnerModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
