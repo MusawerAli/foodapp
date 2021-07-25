@@ -45,7 +45,7 @@ export class AuthGuard implements CanActivate {
       }
 
     // not logged in so redirect to login page with the return url
-    this.router.navigate(["/login"], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(["/auth/login"], { queryParams: { returnUrl: state.url } });
     this.mappingUrl = localStorage.getItem("url");
     localStorage.clear();
     localStorage.setItem("clickMapping", this.mappingUrl);
@@ -66,7 +66,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     // not logged in so redirect to login page with the return url
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/auth/login"]);
     localStorage.clear();
     return false;
   }
@@ -82,7 +82,7 @@ export class AuthGuard implements CanActivate {
     }
 
     // not logged in so redirect to login page with the return url
-    this.router.navigate(["/login"], {
+    this.router.navigate(["/auth/login"], {
       queryParams: { returnUrl: route.path },
     });
     localStorage.clear();

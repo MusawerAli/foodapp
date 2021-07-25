@@ -3,7 +3,7 @@ import {FormControl, Validators,FormGroup,FormBuilder} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // class imageSnippet {
 //   constructor(public src:string,public file:File) {
-    
+
 //   }
 //  }
 @Component({
@@ -45,29 +45,28 @@ export class AddComponent implements OnInit {
      this.dialogRef.close({action:'Add',data:form_value});
   }
   //selectedFile:imageSnippet;
-  
+
   imageUpload(imageInput:any){
-    debugger;
     var files = imageInput.files[0];
-    
+
 
     if (files) {
         var reader = new FileReader();
 
         reader.onload =this.handleFile.bind(this);
         reader.readAsBinaryString(files);
-     
+
     }
   }
 
     handleFile(event) {
       var binaryString = event.target.result;
             this.base64textString= btoa(binaryString);
-            
+
              console.log(btoa(this.base64textString))
-           
-    }    
+
+    }
     closePopUp(){
-     
+
     }
 }

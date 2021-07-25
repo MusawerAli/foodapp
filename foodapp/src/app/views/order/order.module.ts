@@ -9,13 +9,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MaterialModule } from 'src/app/shared/material.module';
+import { TodayOrderComponent } from './today-order/today-order.component';
 
 
 @NgModule({
   declarations: [
     OrderComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    TodayOrderComponent
   ],
   imports: [
     CommonModule,

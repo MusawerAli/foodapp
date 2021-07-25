@@ -5,5 +5,6 @@ export enum ApiEndpoints {
   checkOrders="checkOrders",
   orderBook="orderBook",
   getMenuesList="getMenuesList",
-  createMenue="createMenue"
+  createMenue="createMenue",
+  getMyOrder="getMyOrder"
 }

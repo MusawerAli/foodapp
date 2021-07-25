@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2,TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit,AfterViewInit, Renderer2,TemplateRef, ViewChild } from '@angular/core';
 import {FormControl, Validators,FormGroup,FormBuilder} from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { CommonserviceService } from 'src/services/commonservice/commonservice.service';
@@ -14,9 +14,9 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./order.component.css'],
   providers: [DatePipe]
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit,AfterViewInit {
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
-
+  // @Input('childtodayOrderData') childtodayOrderData:any;
 
   modalRef: BsModalRef | null;
   menues:any = [];
@@ -30,6 +30,7 @@ export class OrderComponent implements OnInit {
   total=0;
   initialAmount = 0;
   form:FormGroup;
+  childtodayData:any=[];
   config: any = { backdrop: "static", keyboard: false,};
   //total calculation of order function
   reducer = (acc, cur) => {
@@ -55,12 +56,18 @@ createForm() {
     private modalService: BsModalService,
     private fb: FormBuilder,private CookieService:CookieService,private OrdersService:OrdersService,private router:Router,private renderer: Renderer2,private MessageService:MessageService,private datePipe: DatePipe,private CommonService:CommonserviceService
   ) {
-
+    this.CommonService.todayChildMyOrder.subscribe((data) => {
+      this.childtodayData = data;
+      console.warn('childtodayOrderData',data)
+    })
     this.todayDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.createForm();
     this.order();
     this.menues = JSON.parse(localStorage.getItem('list_of_menues'));
      this.getMenue();
+     console.warn('this.childtodayData',this.childtodayData)
+  }
+  ngAfterViewInit(): void {
 
   }
   getMenue(){
@@ -74,7 +81,6 @@ createForm() {
                 console.log(localStorage.getItem('list_of_menues'))
       },
       error => {
-        debugger;
         this.MessageService.error('Warning','Session Expired');
         this.MessageService.cancelSound();
         this.router.navigate(["/auth"]);
@@ -83,6 +89,9 @@ createForm() {
     );
   }
   ngOnInit(): void {
+
+
+
     this.local_cart = JSON.parse(localStorage.getItem('cart'));
     this.CommonService.myOrdersSockets().subscribe((data)=>{
 
@@ -108,19 +117,21 @@ createForm() {
     let cart_data = {
       'initialAmount':form_value.initialAmount,
       'cart':cart,
-      'date':this.todayDate
+      'date':this.todayDate,
+      'total':this.total
     }
-    debugger;
     this.spinnerService.show();
   this.OrdersService.bookOrder(cart_data).subscribe((data)=>{
    if(data.code==200){
+     this.CommonService.getRefresh(true);
+    this.spinnerService.hide();
+    this.modalRef.hide();
     this.MessageService.successSound();
     this.MessageService.success('Success','Order Created Successfully.');
    }
    },
    error => {
      if(error.status==401){
-      debugger;
       this.CookieService.delete('token');
       this.CookieService.delete('user_token');
       this.MessageService.cancelSound();
@@ -136,7 +147,7 @@ createForm() {
 
 
    increaseCount(menue) {
-     debugger
+     if(this.childtodayData==undefined){
         let dat = JSON.parse(localStorage.getItem('cart'));
         let obj:any=  {};
         let cart:any=[];
@@ -182,11 +193,15 @@ createForm() {
       data[0].qty = menue.qty;
       localStorage.setItem('value',menue.qty)
 
-
+     }else{
+      this.MessageService.cancelSound();
+      this.MessageService.error('Error','your Today order are placed');
+     }
 
   }
 
   decreaseCount(menue) {
+    if(this.childtodayData==undefined){
     if(menue.qty<=0){
       menue.qty;
       let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
@@ -201,11 +216,25 @@ createForm() {
     data[0].qty = menue.qty;
     localStorage.setItem('value',menue.qty)
     }
+
+  }
+  else{
+    this.MessageService.cancelSound();
+    this.MessageService.error('Error','your Today order are placed');
+   }
   }
   getSum(array){
     return array.reduce((accum,item) => accum + item.price, 0);
   }
+
+  // todayOrderData($event){
+  //  this.childtodayData = $event;
+  //  console.warn('childtodayData',this.childtodayData)
+  // }
+
 }
+
+
 // function price(price: any, arg1: string) {
 //   throw new Error('Function not implemented.');
 // }

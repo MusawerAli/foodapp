@@ -28,6 +28,17 @@
       </div>
       <br>
       <br>
+      <!-- app-today-order -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          <b><p>Today Order</p></b>
+          <app-today-order></app-today-order>
+        </div>
+      </div>
+
+
+      <br />
+
       <!-- Interests -->
       <div class="w3-card w3-round w3-white w3-hide-small">
         <div class="w3-container">
@@ -114,7 +125,8 @@
         </div>
        <a href="" class="w3-button w3-green w3-round m-3" style="padding: 7px;">Checkout</a>
       </div> -->
-      <div *ngIf="local_cart!=null && local_cart.length!=0" class=" w3-card w3-round w3-white  checkout" >
+      {{ childtodayData }}
+      <div *ngIf="local_cart!=null && local_cart.length!=0 && childtodayData==undefined" class=" w3-card w3-round w3-white  checkout" >
         <div style="background-color:#002360">
           <p style="font-size: 20px;display: inline-block; margin: 9px;color: white;">Cart<i class="fa fa-shopping-cart"></i></p>
           <a  (click)="checkout()" class="w3-button w3-round w3-white anchor" >Checkout</a>

@@ -57,18 +57,6 @@ class Menues(db.Model):
 
 
 
-class Orders(db.Model):
-    __tablename__ = 'orders'  
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    order = db.Column(db.Text(), unique=False, nullable=False)   
-    isNoted = db.Column(db.Integer(),nullable=False,default=0) 
-    isBooked = db.Column(db.Integer(),nullable=False,default=0)
-    total = db.Column(db.Integer(),nullable=False,default=0)
-    givenPayment = db.Column(db.Integer(),nullable=False,default=0) 
-    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id'))
-    creater_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
-    date = db.Column(db.DateTime(), nullable=True)
-    users = db.relationship("Users", backref=db.backref("users", uselist=False))
 
 
 class OrderDetail(db.Model):
@@ -81,7 +69,24 @@ class OrderDetail(db.Model):
     total = db.Column(db.Float(),nullable=False,default=0)
     employee_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
     date = db.Column(db.DateTime(), nullable=True)
-   
+    orders = db.relationship("Orders", backref=db.backref("orders", uselist=False))
+    menue = db.relationship("Menues", backref=db.backref("menues", uselist=False))
+
+class Orders(db.Model):
+    __tablename__ = 'orders'  
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    order = db.Column(db.Text(), unique=False, nullable=False)   
+    isNoted = db.Column(db.Integer(),nullable=False,default=0) 
+    isBooked = db.Column(db.Integer(),nullable=False,default=0)
+    total = db.Column(db.Float(),nullable=False,default=0)
+    givenPayment = db.Column(db.Float(),nullable=False,default=0) 
+    remains = db.Column(db.Float(),nullable=False,default=0)
+    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id'))
+    creater_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
+    date = db.Column(db.DateTime(), nullable=True)
+    users = db.relationship("Users", backref=db.backref("users", uselist=False))
+    order_details = db.relationship("OrderDetail", backref=db.backref("order_detail", uselist=False))
+
 
 def token_required(f):
    @wraps(f)  
@@ -190,22 +195,58 @@ def login_user():
 @app.route('/checkOrders', methods=['GET', 'POST']) 
 @onlyChef
 def checkOrders(current_user):
-    orders = Orders.query.filter_by(isNoted=0).all()  
+    if request.method == 'POST':
+        req_data = request.get_json()
+        isBookedStatus = 0 if req_data['status']=='A' else 1 if req_data['status']=='P' else 2 if req_data['status']=='D' else 3
+        if(req_data['type']=='T'):
+            
+            orders = Orders.query.filter_by(isBooked=isBookedStatus,date=req_data['from_date']).all()
+            if orders != None:
+                output = [] 
 
-    output = [] 
+                for order in orders:
+                    order_data = {}  
+                    order_data['id'] = order.id 
+                    order_data['user_info']={'user_name':order.users.user_name,'contact':order.users.contact,'role':order.users.role.name}, 
 
-    for order in orders:
-        order_data = {}  
-        order_data['order'] = order.order 
-        order_data['isNoted'] = order.isNoted 
-        order_data['isBooked'] = order.isBooked  
-        order_data['total'] = order.total
-        order_data['givenPayment'] = order.givenPayment
-        # order_data['orderBy'] = order.role.name
-        order_data['userName'] = order.users.user_name
-        order_data['date'] = order.date
-        output.append(order_data)  
-    return jsonify({'list_of_orders' : output})
+                    order_data['order_list'] = [{'id':i.id,'qty':i.qty,'price':i.price,'total':i.total,'menue':{'menue':i.menue.menue,'desc':i.menue.description,'price':i.menue.price}} for i in order.order_details], 
+                    order_data['isBooked'] = order.isBooked  
+                    order_data['total'] = order.total
+                    order_data['remains'] = order.remains
+                    order_data['givenPayment'] = order.givenPayment
+                    order_data['isNoted'] = order.isNoted
+                    order_data['date'] = order.date
+                    output.append(order_data) 
+            else:
+                output = [] 
+ 
+        elif(req_data['type']=='A'):
+            
+            orders = Orders.query.filter_by(isBooked=isBookedStatus).all()
+            if orders != None:
+
+                output = [] 
+
+                for order in orders:
+                    order_data = {}  
+                    order_data['id'] = order.id
+                    order_data['user_info']={'user_name':order.users.user_name,'contact':order.users.contact,'role':order.users.role.name}, 
+                    order_data['order_list'] = [{'id':i.id,'qty':i.qty,'price':i.price,'total':i.total,'menue':{'menue':i.menue.menue,'desc':i.menue.description,'price':i.menue.price}} for i in order.order_details], 
+                    order_data['isBooked'] = order.isBooked  
+                    order_data['total'] = order.total
+                    order_data['remains'] = order.remains
+                    order_data['givenPayment'] = order.givenPayment
+                    order_data['isNoted'] = order.isNoted
+                    order_data['date'] = order.date
+                    output.append(order_data) 
+            else:
+                output = [] 
+        
+        
+        return jsonify({'message': 'Orders get successfully','code':200,'data':output})
+
+
+    
 
 
 @app.route('/orderBook', methods=['GET', 'POST']) 
@@ -251,10 +292,12 @@ def bookOrder(current_user):
     req_data = request.get_json()
     data = json.loads(req_data['cart'])
     initialAmount = json.loads(req_data['initialAmount'])
+    total = req_data['total']
     date = req_data['date']
     orders_entries = []
+    remains = initialAmount-total
     try:
-        create_order = Orders(order=json.dumps([(i['menue']) for i in data]),isNoted=0,isBooked=0,total=0,givenPayment=initialAmount,role_id=current_user.role_id,creater_id=current_user.id,date=date)
+        create_order = Orders(order=json.dumps([(i['menue']) for i in data]),isNoted=0,isBooked=0,total=total,givenPayment=initialAmount,remains=remains,role_id=current_user.role_id,creater_id=current_user.id,date=date)
         db.session.add(create_order) 
         db.session.flush()
         for item in data:
@@ -278,16 +321,56 @@ def bookOrder(current_user):
         error = str(e.__dict__['orig'])
         return jsonify({'message':error,'code':403})
 
-        
-    # try:
-    #     create_order = Orders(order=data['order'],isNoted=0,isBooked=0,total=0,givenPayment=0,role_id=current_user.role_id,creater_id=current_user.id,date='2021-06-21')
-    #     db.session.add(create_order)  
-    #     db.session.commit()
-    # except SQLAlchemyError as e:
-    #     error = str(e.__dict__['orig'])
-        
-    #     return jsonify({'message':error,'code':403})
     return jsonify({'message': 'Order Created successfully','code':200})
+
+
+@app.route('/getMyOrder', methods=['POST'])
+@token_required
+def getMyOrder(current_user):
+    
+    if request.method == 'POST':
+        req_data = request.get_json()
+        if(req_data['type']=='T'):
+
+            orders = Orders.query.filter_by(creater_id=current_user.id,date=req_data['from_date']).first()
+            if orders != None:
+                output = [{
+                    'id':orders.id,
+                    'order_list':[{'id':i.id,'qty':i.qty,'price':i.price,'total':i.total,'menue':{'menue':i.menue.menue,'desc':i.menue.description,'price':i.menue.price}} for i in orders.order_details],
+                    'isBooked':orders.isBooked,
+                    'isNoted':orders.isNoted,
+                    'total':orders.total,
+                    'remains':orders.remains,
+                    'givenPayment':orders.givenPayment,
+                    'date':orders.date
+
+                }]
+            else:
+                output = []
+        elif(req_data['type']=='A'):
+            orders = Orders.query.filter_by(creater_id=current_user.id).all()
+            if orders != None:
+
+                output = [] 
+
+                for order in orders:
+                    order_data = {}  
+                    order_data['id'] = order.id 
+                    order_data['order_list'] = [{'id':i.id,'qty':i.qty,'price':i.price,'total':i.total,'menue':{'menue':i.menue.menue,'desc':i.menue.description,'price':i.menue.price}} for i in order.order_details], 
+                    order_data['isBooked'] = order.isBooked  
+                    order_data['total'] = order.total
+                    order_data['remains'] = order.remains
+                    order_data['givenPayment'] = order.givenPayment
+                    order_data['isNoted'] = order.isNoted
+                    order_data['date'] = order.date
+                    output.append(order_data) 
+            else:
+                output = [] 
+        
+        
+        return jsonify({'message': 'Orders get successfully','code':200,'data':output})
+
+
 
 @app.route('/getMenuesList', methods=['GET', 'POST']) 
 @token_required

@@ -1,0 +1,30 @@
+<table class="w3-table-all" *ngIf="myOrders!=undefined">
+  <thead>
+    <tr>
+      <th>Menue</th>
+      <th>Qty</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let menue of myOrders.order_list">
+      <td>{{ menue.menue.menue }}</td>
+      <td>{{ menue.qty }}</td>
+      <td>Rs:{{ menue.total }}</td>
+    </tr>
+    <hr/>
+    <tr class="w3-teal">
+      <th colspan="2">Grand Total</th>
+      <th>Rs:{{ myOrders.total }}</th>
+    </tr>
+    <tr>
+      <th colspan="2">Initial Deposit</th>
+      <th>Rs:{{ myOrders.givenPayment }}</th>
+    </tr>
+    <tr class="w3-green">
+      <th colspan="2">Remains Credit</th>
+      <th>Rs:{{ myOrders.remains }}</th>
+    </tr>
+  </tbody>
+
+</table>

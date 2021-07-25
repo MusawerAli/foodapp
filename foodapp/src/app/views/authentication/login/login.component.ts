@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,private AuthenticationService:AuthenticationService,private CookieService:CookieService,private router:Router,private renderer: Renderer2,private MessageService:MessageService) {
     this.login();
     this.register();
-    debugger;
     if(this.CookieService.check('user_token')==true){
       let user_token = this.CookieService.get('user_token');
       if(user_token=="employee"){
@@ -33,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
   // @ViewChild("wrapper") private wrapper: ElementRef<HTMLElement>;
   public showLogin() {
-    
+
     this.renderer.setStyle(this.rec_prism.nativeElement, 'transform', `translateZ(-100px)`);
   //   const parentElement = this.wrapper.nativeElement;
   //   const rec_prism = parentElement.querySelector(".rec-prism");
@@ -101,7 +100,7 @@ export class LoginComponent implements OnInit {
     this.AuthenticationService.login(data).subscribe((data)=>{
 
       console.log('dasda',data);
-      
+
       if(data.code==200){
         this.MessageService.successSound();
         this.MessageService.success('Success','Login Successfully.');
@@ -155,7 +154,7 @@ export class LoginComponent implements OnInit {
     this.AuthenticationService.register(data).subscribe((data)=>{
 
       console.log('dasda',data);
-      
+
       if(data.code==200){
         this.MessageService.successSound();
         this.MessageService.success('Success','Register Successfully.');
