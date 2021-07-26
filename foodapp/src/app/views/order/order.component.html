@@ -85,7 +85,7 @@
         <div class="row" >
           <div class="card" style="width:350px;margin:17px;" *ngFor="let menue of menues">
 
-            <img class="card-img-top" src="data:image/jpeg;base64,{{menue.picture}}" alt="Card image" style="width:100%">
+            <img class="card-img-top" src="data:image/jpeg;base64,{{menue.picture}}" alt="Card image" style="width:100%;height:200px;">
             <div class="card-body">
               <h2 class="card-title">{{menue.menue}}:</h2>
 
@@ -125,7 +125,7 @@
         </div>
        <a href="" class="w3-button w3-green w3-round m-3" style="padding: 7px;">Checkout</a>
       </div> -->
-      {{ childtodayData }}
+      <!-- {{ childtodayData }} -->
       <div *ngIf="local_cart!=null && local_cart.length!=0 && childtodayData==undefined" class=" w3-card w3-round w3-white  checkout" >
         <div style="background-color:#002360">
           <p style="font-size: 20px;display: inline-block; margin: 9px;color: white;">Cart<i class="fa fa-shopping-cart"></i></p>

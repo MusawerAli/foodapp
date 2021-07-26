@@ -56,6 +56,10 @@ createForm() {
     private modalService: BsModalService,
     private fb: FormBuilder,private CookieService:CookieService,private OrdersService:OrdersService,private router:Router,private renderer: Renderer2,private MessageService:MessageService,private datePipe: DatePipe,private CommonService:CommonserviceService
   ) {
+    this.local_cart = JSON.parse(localStorage.getItem('cart'));
+    
+    this.total = (this.local_cart!=null)?this.local_cart.reduce(this.reducer,0):0;
+    console.log(this.total)
     this.CommonService.todayChildMyOrder.subscribe((data) => {
       this.childtodayData = data;
       console.warn('childtodayOrderData',data)
@@ -92,7 +96,7 @@ createForm() {
 
 
 
-    this.local_cart = JSON.parse(localStorage.getItem('cart'));
+
     this.CommonService.myOrdersSockets().subscribe((data)=>{
 
        this.myOrders = data.myOrders
@@ -130,6 +134,7 @@ createForm() {
     this.MessageService.success('Success','Order Created Successfully.');
    }
    },
+   
    error => {
      if(error.status==401){
       this.CookieService.delete('token');
@@ -158,6 +163,7 @@ createForm() {
         obj['price'] = menue.price;
         obj['total'] = menue.price*qty;
         obj['qty'] = qty;
+        debugger;
       if(dat==null){
         cart.push(obj)
 
@@ -165,6 +171,7 @@ createForm() {
         this.local_cart = cart;
 
       }else{
+        debugger;
         let chk_if = dat.filter(a=>a.id===menue.id);
       if(chk_if.length==0){
           dat.push(obj);
@@ -202,22 +209,54 @@ createForm() {
 
   decreaseCount(menue) {
     if(this.childtodayData==undefined){
-    if(menue.qty<=0){
-      menue.qty;
-      let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
-      let data = ss.filter(x => x.id== menue.id);
-      data[0].qty = menue.qty;
-      localStorage.setItem('cart',menue.qty)
-    }
-    else{
-    menue.qty -=1;
-    let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
-    let data = ss.filter(x => x.id== menue.id);
-    data[0].qty = menue.qty;
-    localStorage.setItem('value',menue.qty)
+      let dat = JSON.parse(localStorage.getItem('cart'));
+      let obj:any=  {};
+      let cart:any=[];
+      let qty = menue.qty+1;
+      obj['description'] = menue.description;
+      obj['id'] = menue.id;
+      obj['menue'] = menue.menue;
+      obj['price'] = menue.price;
+      obj['total'] = menue.price*qty;
+      obj['qty'] = qty;
+      debugger;
+    if(dat==null){
+      cart.push(obj)
+
+      localStorage.setItem('cart',JSON.stringify(cart))
+      this.local_cart = cart;
+
+    }else{
+      debugger;
+      let chk_if = dat.filter(a=>a.id===menue.id);
+    if(chk_if.length==0){
+        dat.push(obj);
+    }else{
+
+      let qty = menue.qty-1;
+      chk_if[0].qty = qty;
+      chk_if[0].price = menue.price;
+      chk_if[0].total = qty*menue.price;
+
+      localStorage.setItem('cart',JSON.stringify(chk_if))
+      // this.local_cart = dat;
+
     }
 
-  }
+
+  localStorage.setItem('cart',JSON.stringify(dat))
+  this.total = dat.reduce(this.reducer,0);
+  this.local_cart = dat;
+}
+
+  menue.qty -= 1;
+  let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
+    let data = ss.filter(x => x.id== menue.id);
+
+    data[0].qty = menue.qty;
+    localStorage.setItem('value',menue.qty)
+
+   }
   else{
     this.MessageService.cancelSound();
     this.MessageService.error('Error','your Today order are placed');

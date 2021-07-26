@@ -17,14 +17,13 @@ export class ChefComponent implements OnInit {
     this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `none`);
   }
   logOut(){
-    
     this.cookieService.deleteAll();
     this.router.navigate(["/auth"]);
     
   }
-  goToMenue(){
-    this.router.navigate(['/chef/chef'])
-  }
+  // goToMenue(){
+  //   this.router.navigate(['/chef/chef'])
+  // }
   constructor(private renderer:Renderer2, private cookieService:CookieService,private router:Router ) { }
 
   ngOnInit(): void {

@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { EmployeesTodayOrderComponent } from './employees-today-order/employees-today-order.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatTableModule } from '@angular/material/table';
     MenueComponent,
     AddComponent,
     EditComponent,
-    DeleteComponent
+    DeleteComponent,
+    EmployeesTodayOrderComponent
   ],
   imports: [
     CommonModule,
