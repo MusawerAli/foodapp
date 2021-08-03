@@ -1,78 +1,97 @@
-<div class="container" style="border:1px solid #e5e5e5; margin: 15px;">
-	<div class="col-md-12">
-    	<div class="panel panel-default">
-				<div class="panel-heading" style="text-align: center;font-size: large;margin-top: 10px;margin-bottom: 10px;">
-					Employee
-				</div>
+<div class="container" style="border: 1px solid lightgray;margin-bottom: 20px;margin-top: 10px;">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center; font-size: large;padding: 10px;">
+                Order
+            </div>
             <div class="panel-body">
                 <table class="table table-condensed table-striped">
-                            <thead>
-                                <tr>
-                                <th></th>
-                                <th>Menue</th>
-                                <th>Price</th>          
-                                <th>Qty</th>
-                                <th>Total Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
-                                    <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
-                                    <td>Qorma</td>
-                                    <td>150</td>
-                                    <td>2</td>
-                                    <td>300</td>
-                                </tr>                    
-                                <tr>
-                                    <td colspan="12" class="hiddenRow">
-                                        <div class="accordian-body collapse" id="demo1"> 
+                    <thead>
+                        <tr class="w3-green">
+                            <th>Id</th>
+                            <th>Menue</th>
+                            <!-- <th>Menue(id)</th> -->
+                            <th>Price</th>          
+                            <th>Qty</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody *ngFor="let order of checkOrdersLIst | keyvalue">
+                        <tr data-toggle="collapse" [attr.data-target]="'#demo'+ order.key" class="accordion-toggle" >
+
+                            <td> {{order.value.id}}   </td>
+                            <td> {{order.value.order_list[0][0].menue.menue}} </td>
+                            <!-- <td *ngIf="(order.order_list[0][0].menue.id ==order.order_list[0][0].menue.id)">{{order.order_list[0][0].menue.menue}}</td> -->
+                            <!-- <td>{{order.value.order_list[0][0].menue.id}}</td> -->
+                            <td>{{order.value.order_list[0][0].menue.price}}</td>
+                            <td>{{order.value.order_list[0][0].qty}}</td>
+                            <td>{{order.value.total}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="12" class="hiddenRow">
+                                <div class="accordian-body collapse" [id]="'demo'+order.key" >
+                                    <div style="text-align: center;padding: 10px; font-size:medium;">
+                                        User Details
+                                    </div>
                                     <table class="table table-striped">
                                         <thead>
                                             <tr class="info">
-                                                <th>user id</th>
                                                 <th>User Name</th>
-                                                <th>Total Amount Paid</th>			
-                                                <th>Date off</th>	
-                                            </tr>
-                                        </thead>	
-                                                                
-                                        <tbody>												
-                                            <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                                <td>1</td>
-                                                <td>ABC </td>
-                                                <td>300</td>
-                                                <td> 2017/09/27</td>
-                                            </tr>                                                            
-                                <tr>
-                                <td colspan="12" class="hiddenRow">
-                                                <div class="accordian-body collapse" id="demo10"> 
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>item 1</th>
-                                                <th>item 2</th>
-                                                <th>item 3 </th>
-                                                <th>item 4</th>
-                                                <th>item 5</th>
+                                                <th>contact</th>
+                                                <th>Total Paid Amount </th>
+                                                <th>Total bill</th>
+                                                <th>Remaining Credit</th>	
                                             </tr>
                                         </thead>
+
                                         <tbody>
-                                            <tr>
-                                                <td>item 1</td>
-                                                <td>item 2</td>
-                                                <td>item 3</td>
-                                                <td>item 4</td>
-                                                <td>item 5</td>
+
+                                            <tr data-toggle="collapse" class="accordion-toggle" [attr.data-target]="'#user_detail'+order.key">
+                                                <td> {{order.value.user_info[0].user_name}} </td>
+                                                <td>{{order.value.user_info[0].contact}} </td>
+                                                <td>{{order.value.givenPayment}}</td>
+                                                <td>{{order.value.total}}</td>
+                                                <td>{{order.value.remains}}</td>
                                             </tr>
+
+                                            <tr>
+                                                <td colspan="12" class="hiddenRow">
+                                                    <div class="accordian-body collapse" [id]="'user_detail'+order.key">
+                                                        <div style="padding:10px;font-size: 15px;text-align: center;">Order details</div>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>item 1</th>
+                                                                    <th>item 2</th>
+                                                                    <th>item 3 </th>
+                                                                    <!-- <th>item 4</th>
+                                                                    <th>item 5</th> -->
+                                                                </tr>
+
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>                                                                            
+                                                                    <td>{{order.value.order_list[0][0].menue.menue}}</td>
+                                                                    <td>{{order.value.order_list[0][1].menue.menue}}</td>
+                                                                    <!-- <td> {{order.value.order_list[0][2].menue.menue}} </td> -->
+                                                                    <!-- <td>item 4</td>
+                                                                    <td>item 5</td>                                                                            -->
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>        
+                                                    </div>
+                                                </td>
+                                            </tr>        
                                         </tbody>
-                                    </table>                    
-                                </div> 
-                            </tbody>
-                        </table>                        
-                    </div>
+                                    </table>        
+                                </div>
+                            </td>
+                        </tr>        
+                    </tbody>
                 </table>
             </div>        
         </div>        
     </div>
 </div>
-       

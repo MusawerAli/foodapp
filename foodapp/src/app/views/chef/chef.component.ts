@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./chef.component.css']
 })
 export class ChefComponent implements OnInit {
+
+  
+
   @ViewChild('mySidebar') mySidebar:ElementRef;
    w3_open(){
      this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `block`);
@@ -21,14 +24,20 @@ export class ChefComponent implements OnInit {
     this.router.navigate(["/auth"]);
     
   }
-  // goToMenue(){
-  //   this.router.navigate(['/chef/chef'])
-  // }
-  constructor(private renderer:Renderer2, private cookieService:CookieService,private router:Router ) { }
+  
+  constructor( 
+               private renderer:Renderer2,
+               private cookieService:CookieService,
+               private router:Router,
+               
+               ) 
+               {
+    
+   }
 
   ngOnInit(): void {
     
 
   }
-
+  
 }

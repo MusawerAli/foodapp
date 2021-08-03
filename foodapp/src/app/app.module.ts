@@ -21,7 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ModalModule } from "ngx-bootstrap/modal";
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, DatePipe } from '@angular/common';
 import { TabsModule } from "ngx-bootstrap/tabs";
 import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -54,7 +54,9 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
     HttpClientModule,
     NgxSpinnerModule,
   ],
-  providers: [CookieService],
+  providers: [CookieService,
+              DatePipe
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
