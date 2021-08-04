@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 import { OrdersService } from 'src/services/orders/orders.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DatePipe } from '@angular/common';
+
+import { ChefService } from 'src/services/chef/chef.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -15,6 +17,10 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class OrderComponent implements OnInit,AfterViewInit {
+
+  date=new Date().toJSON().slice(0,10);
+
+
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   // @Input('childtodayOrderData') childtodayOrderData:any;
 
@@ -31,6 +37,7 @@ export class OrderComponent implements OnInit,AfterViewInit {
   initialAmount = 0;
   form:FormGroup;
   childtodayData:any=[];
+  orderListDatails:any=[];
   config: any = { backdrop: "static", keyboard: false,};
   //total calculation of order function
   reducer = (acc, cur) => {
@@ -52,9 +59,17 @@ createForm() {
     })
   }
   constructor(
-    private spinnerService: NgxSpinnerService,
-    private modalService: BsModalService,
-    private fb: FormBuilder,private CookieService:CookieService,private OrdersService:OrdersService,private router:Router,private renderer: Renderer2,private MessageService:MessageService,private datePipe: DatePipe,private CommonService:CommonserviceService
+              private spinnerService: NgxSpinnerService,
+              private modalService: BsModalService,
+              private fb: FormBuilder,
+              private CookieService:CookieService,
+              private OrdersService:OrdersService,
+              private router:Router,
+              private renderer: Renderer2,
+              private MessageService:MessageService,
+              private datePipe: DatePipe,
+              private CommonService:CommonserviceService,
+              private ChefService:ChefService
   ) {
     this.local_cart = JSON.parse(localStorage.getItem('cart'));
     
@@ -163,15 +178,13 @@ createForm() {
         obj['price'] = menue.price;
         obj['total'] = menue.price*qty;
         obj['qty'] = qty;
-        debugger;
-      if(dat==null){
+        if(dat==null){
         cart.push(obj)
 
         localStorage.setItem('cart',JSON.stringify(cart))
         this.local_cart = cart;
 
       }else{
-        debugger;
         let chk_if = dat.filter(a=>a.id===menue.id);
       if(chk_if.length==0){
           dat.push(obj);
@@ -208,59 +221,63 @@ createForm() {
   }
 
   decreaseCount(menue) {
-    if(this.childtodayData==undefined){
-      let dat = JSON.parse(localStorage.getItem('cart'));
-      let obj:any=  {};
-      let cart:any=[];
-      let qty = menue.qty+1;
-      obj['description'] = menue.description;
-      obj['id'] = menue.id;
-      obj['menue'] = menue.menue;
-      obj['price'] = menue.price;
-      obj['total'] = menue.price*qty;
-      obj['qty'] = qty;
-      debugger;
-    if(dat==null){
-      cart.push(obj)
-
-      localStorage.setItem('cart',JSON.stringify(cart))
-      this.local_cart = cart;
-
+    if(menue.qty>0){
+      if(this.childtodayData==undefined){
+        let dat = JSON.parse(localStorage.getItem('cart'));
+        let obj:any=  {};
+        let cart:any=[];
+        let qty = menue.qty+1;
+        obj['description'] = menue.description;
+        obj['id'] = menue.id;
+        obj['menue'] = menue.menue;
+        obj['price'] = menue.price;
+        obj['total'] = menue.price*qty;
+        obj['qty'] = qty;
+      if(dat==null){
+        cart.push(obj)
+  
+        localStorage.setItem('cart',JSON.stringify(cart))
+        this.local_cart = cart;
+  
+      }else{
+        let chk_if = dat.filter(a=>a.id===menue.id);
+      if(chk_if.length==0){
+          dat.push(obj);
+      }else{
+  
+        let qty = menue.qty-1;
+        
+        chk_if[0].qty = qty;
+        chk_if[0].price = menue.price;
+        chk_if[0].total = qty*menue.price;
+  
+        localStorage.setItem('cart',JSON.stringify(chk_if))
+        // this.local_cart = dat;
+  
+      }
+  
+  
+    localStorage.setItem('cart',JSON.stringify(dat))
+    this.total = dat.reduce(this.reducer,0);
+    this.local_cart = dat;
+  }
+  
+    menue.qty -= 1;
+    let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
+      let data = ss.filter(x => x.id== menue.id);
+  
+      data[0].qty = menue.qty;
+      localStorage.setItem('value',menue.qty)
+  
+     }
+    else{
+      this.MessageService.cancelSound();
+      this.MessageService.error('Error','your Today order are placed');
+     }
     }else{
-      debugger;
-      let chk_if = dat.filter(a=>a.id===menue.id);
-    if(chk_if.length==0){
-        dat.push(obj);
-    }else{
-
-      let qty = menue.qty-1;
-      chk_if[0].qty = qty;
-      chk_if[0].price = menue.price;
-      chk_if[0].total = qty*menue.price;
-
-      localStorage.setItem('cart',JSON.stringify(chk_if))
-      // this.local_cart = dat;
-
+      this.MessageService.cancelSound();
+      this.MessageService.error('Error','Minimum qty is 1');
     }
-
-
-  localStorage.setItem('cart',JSON.stringify(dat))
-  this.total = dat.reduce(this.reducer,0);
-  this.local_cart = dat;
-}
-
-  menue.qty -= 1;
-  let ss =  JSON.parse(localStorage.getItem('list_of_menues'));
-    let data = ss.filter(x => x.id== menue.id);
-
-    data[0].qty = menue.qty;
-    localStorage.setItem('value',menue.qty)
-
-   }
-  else{
-    this.MessageService.cancelSound();
-    this.MessageService.error('Error','your Today order are placed');
-   }
   }
   getSum(array){
     return array.reduce((accum,item) => accum + item.price, 0);
@@ -271,9 +288,28 @@ createForm() {
   //  console.warn('childtodayData',this.childtodayData)
   // }
 
+
+  checkOrders(){    
+    let  data = {"from_date":"2021-07-26","to_date":"2021-08-02","type":"A","status":"A"}
+    this.ChefService.checkOrders(data).subscribe(
+      (data) => {
+       console.log(data.code)
+        if(data.code==200){
+          this.orderListDatails=data.data;
+        }else{
+          this.MessageService.error('Warning','Something went wrong error 255');
+          this.MessageService.cancelSound();
+          // this.CookieService.deleteAll();
+          // this.router.navigateByUrl('/auth');
+        }
+      },
+      error => {
+        // this.MessageService.error('Warning','Something went wrong error 256');
+        // this.MessageService.cancelSound();
+        this.CookieService.deleteAll();
+        this.router.navigateByUrl('/auth');
+      }
+    );
+  }
+
 }
-
-
-// function price(price: any, arg1: string) {
-//   throw new Error('Function not implemented.');
-// }

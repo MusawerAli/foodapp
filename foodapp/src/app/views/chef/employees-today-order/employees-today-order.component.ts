@@ -20,7 +20,7 @@ export class EmployeesTodayOrderComponent implements OnInit {
                private datePipe: DatePipe,
                private commonService:CommonserviceService,
                private MessageService:MessageService
-  ) {
+            ){
     this.todayDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.checkOrders();
    }
@@ -34,7 +34,6 @@ export class EmployeesTodayOrderComponent implements OnInit {
       (data) => {
        console.log(data.code)
         if(data.code==200){
-          debugger
           this.checkOrdersLIst=data.data;
         }else{
           this.MessageService.error('Warning','Something went wrong error 255');

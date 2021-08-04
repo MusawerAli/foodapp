@@ -21,7 +21,6 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: 2px solid #4caf50; */
 }
 .counter input {
     width: 50px;
@@ -30,8 +29,6 @@ body{
     border-radius: 5px;
     font-size: 16px;
     text-align: center;
-    /* background: #4caf50; */
-    /* color: #fff; */
     background: white;
     color: black;
     appearance: none;
@@ -49,18 +46,15 @@ body{
   margin-left: 15px;
   color: rgba(43, 89, 173);
 }
-/* table tr th{
-  border: 1px solid grey;
-} */
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
-/* .checkout{
+.checkout{
   height: 200px;
   overflow: auto;
-} */
+}
 .anchor{
   float: right;
   margin: 10px;
@@ -75,3 +69,32 @@ td, th {
   background-size: cover;
   background-origin: content-box;
 }
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: lightgray;
+  color: black;
+  /* margin-top: 10px; */
+}
+footer i{
+  padding: 3px;
+  font-size: large;
+}
+.facebook i:hover{
+ color: blue;
+}
+.instagram i:hover{
+  color: rgb(201, 16, 93);
+}
+.snapchat i:hover{
+  color:rgb(201, 201, 0);
+}
+.twitter i:hover{
+  color: #1da1f2;
+ }
+ .pinterest i:hover{
+  color: rgb(138, 3, 3);
+ }
+ .linkedin i:hover{
+ color: rgb(13, 13, 138);
+ }

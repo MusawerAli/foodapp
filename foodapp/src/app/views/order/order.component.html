@@ -10,7 +10,7 @@
 
 
 <!-- Page Container -->
-<div class="w3-container w3-content w3-round" style=" opacity: 0.85; max-width:1400px;padding-top: 60px;background-color: #f1f1f1;">
+<div class="w3-container w3-content w3-round" style=" opacity: 0.9; max-width:1400px;padding-top: 60px;background-color: #f1f1f1;">
   <!-- The Grid -->
   <div class="w3-row">
     <!-- Left Column -->
@@ -18,12 +18,12 @@
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
-         <h4 class="w3-center">My Profile</h4>
+         <h4 >My Profile</h4>
          <p class="w3-center"><img src=""  style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+         <p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>Muhammad</p>
+         <p><i class="fa fa-phone fa-fw w3-margin-right w3-text-theme"></i>+9212344567</p>
+         <p><i class="fa fa-calendar fa-fw w3-margin-right w3-text-theme"></i> {{date}} </p>
         </div>
       </div>
       <br>
@@ -31,7 +31,7 @@
       <!-- app-today-order -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
-          <b><p>Today Order</p></b>
+          <p >Today Order</p>
           <app-today-order></app-today-order>
         </div>
       </div>
@@ -203,9 +203,18 @@ function openNav() {
 }
 </script> -->
 
+<footer>
+  <p>Find me on social media.</p>
+  <a href="" class="facebook"><i class="fa fa-facebook-official "></i></a>
+  <a href="" class="instagram"><i class="fa fa-instagram "></i></a>
+  <a href="" class="snapchat"><i class="fa fa-snapchat "></i></a>
+  <a href="" class="pinterest"><i class="fa fa-pinterest-p "></i></a>
+  <a href="" class="twitter"><i class="fa fa-twitter "></i></a>
+  <a href="" class="linkedin"><i class="fa fa-linkedin "></i></a>
+</footer>
+
 </body>
 </html>
-
 <ng-template #template>
   <div class="modal-header">
     Please Confirm your order and initial amount

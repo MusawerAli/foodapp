@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,AfterViewInit, Injectable  } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef, Renderer2  } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatTable } from '@angular/material/table';
@@ -9,6 +9,7 @@ import { AddComponent } from './dialog/add/add.component';
 import { inject } from '@angular/core/testing';
 import { MessageService } from 'src/services/message/message.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 export interface MenueData {
   id:any,
   menue:any,
@@ -32,9 +33,41 @@ export class MenueComponent implements OnInit {
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(public dialog: MatDialog,private ChefService:ChefService,private MessageService:MessageService, private router:Router) { }
+  constructor(public dialog: MatDialog,
+              private ChefService:ChefService,
+              private MessageService:MessageService, 
+              private router:Router,
+              private renderer:Renderer2,
+              private cookieService:CookieService) { }
   ngOnInit(){
   }
+
+
+
+
+  @ViewChild('mySidebar') mySidebar:ElementRef;
+   w3_open(){
+     //this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `block`);
+    let x=document.getElementById("mySidebar");
+    if(x.style.display=='none'){
+      x.style.display= "block";
+    }
+    else{
+      x.style.display="none"
+    }
+  }
+  @ViewChild('closeMenu') closeMenu:ElementRef
+  w3_close(){
+    this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `none`);
+  }
+  logOut(){
+    this.cookieService.deleteAll();
+    this.router.navigate(["/auth"]);
+    
+  }
+
+
+
   
   getMenue(){
     this.ChefService.getMenues().subscribe(
