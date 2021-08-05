@@ -17,7 +17,7 @@ import { TodayOrderComponent } from './today-order/today-order.component';
     OrderComponent,
     HeaderComponent,
     FooterComponent,
-    TodayOrderComponent
+    TodayOrderComponent,
   ],
   imports: [
     CommonModule,

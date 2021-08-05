@@ -21,6 +21,7 @@
     background-color: black;
     color: white;
     margin-top: 10px;
+    padding: 5px;
 }
 .w3-card button:hover{
     opacity: 0.7;

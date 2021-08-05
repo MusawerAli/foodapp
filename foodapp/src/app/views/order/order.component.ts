@@ -65,7 +65,6 @@ createForm() {
               private CookieService:CookieService,
               private OrdersService:OrdersService,
               private router:Router,
-              private renderer: Renderer2,
               private MessageService:MessageService,
               private datePipe: DatePipe,
               private CommonService:CommonserviceService,
@@ -93,9 +92,7 @@ createForm() {
     this.OrdersService.getMenues().subscribe(
       (data) => {
        console.log(data)
-      //  this.menues=
         this.menues=data.list_of_menues;
-        // localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
         localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
                 console.log(localStorage.getItem('list_of_menues'))
       },
@@ -196,7 +193,6 @@ createForm() {
         chk_if[0].total = qty*menue.price;
 
         localStorage.setItem('cart',JSON.stringify(chk_if))
-        // this.local_cart = dat;
 
       }
 
@@ -252,7 +248,6 @@ createForm() {
         chk_if[0].total = qty*menue.price;
   
         localStorage.setItem('cart',JSON.stringify(chk_if))
-        // this.local_cart = dat;
   
       }
   
@@ -304,10 +299,10 @@ createForm() {
         }
       },
       error => {
-        // this.MessageService.error('Warning','Something went wrong error 256');
-        // this.MessageService.cancelSound();
-        this.CookieService.deleteAll();
-        this.router.navigateByUrl('/auth');
+        this.MessageService.error('Warning','Something went wrong error 256');
+        this.MessageService.cancelSound();
+        // this.CookieService.deleteAll();
+        // this.router.navigateByUrl('/auth');
       }
     );
   }

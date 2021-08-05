@@ -45,27 +45,7 @@ export class MenueComponent implements OnInit {
 
 
 
-  @ViewChild('mySidebar') mySidebar:ElementRef;
-   w3_open(){
-     //this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `block`);
-    let x=document.getElementById("mySidebar");
-    if(x.style.display=='none'){
-      x.style.display= "block";
-    }
-    else{
-      x.style.display="none"
-    }
-  }
-  @ViewChild('closeMenu') closeMenu:ElementRef
-  w3_close(){
-    this.renderer.setStyle(this.mySidebar.nativeElement, 'display', `none`);
-  }
-  logOut(){
-    this.cookieService.deleteAll();
-    this.router.navigate(["/auth"]);
-    
-  }
-
+ 
 
 
   

@@ -1,35 +1,5 @@
- <div>
- <header>
-  <div class="w3-bar w3-top w3-black w3-large" id="menuBars"  style="z-index:4;margin-top: -5px;" #rec_prism>
-    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" (click)="w3_open()"><i class="fa fa-bars"></i> </button>
-    <span class="w3-bar-item w3-right"><a href="" style="text-decoration: none;">Food App</a></span>
-  </div>
-  <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;margin-top: -7px;" #mySidebar id="mySidebar"><br>
-    <div class="w3-container w3-row">
-      <div class="w3-col s8 w3-bar">
-        <span>Welcome, <strong>Mike</strong></span><br>
-        <a href="" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-        <a href="" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-        <a href="" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
-      </div>
-    </div>
-    <hr>
-    <div class="w3-container">
-      <h3>Dashboard</h3>
-    </div>
-    <div class="w3-bar-block">
-        <a  class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" id="closeMenu" (click)="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-        <a href="" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Overview</a>
-        <a href="./chef/menue" class="w3-bar-item w3-button w3-padding " ><i class="fa fa-cutlery fa-fw " style="margin-right: 8px;" ></i>Menue</a>
-        <a href="" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Orders</a>
-        <a href="" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
-        <a href="" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
-    </div>
-    <a class="w3-margin-left w3-button w3-green w3-round"  (click)="logOut()" >Log Out</a>
-  </nav>
- </header>
-
-  <!-- style="margin:90px 20px 0 330px;" -->
+<body>
+  <app-header></app-header>
   <div class="w3-main" style="margin:90px 20px 0 330px;">
     <!-- <button mat-button (click)="deleteDialog('',{})" class="deleteStyle" mat-flat-button color="primary">Remove</button> -->
     <a mat-button (click)="openDialog('Add',{})" class="style w3-button w3-green w3-round" mat-flat-button color="primary">Add Row</a>
@@ -39,8 +9,6 @@
     </mat-form-field>
     <div class="example-container mat-elevation-z8">
       <mat-table mat-table [dataSource]="dataSource" matSort>
-
-
 
         <ng-container matColumnDef="id">
           <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
@@ -105,15 +73,5 @@
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>    
   </div> 
-  <div class="w3-main" style="margin:90px 20px 0 330px;" class=" footer">
-    <!-- <footer class="w3-container w3-light-grey  w3-margin-top footer" > -->
-      <p>Find us on social media.</p>
-      <i class="fa fa-facebook-official w3-hover-opacity"></i>
-      <i class="fa fa-instagram w3-hover-opacity"></i>
-      <i class="fa fa-snapchat w3-hover-opacity"></i>
-      <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-      <i class="fa fa-twitter w3-hover-opacity"></i>
-      <i class="fa fa-linkedin w3-hover-opacity"></i>
-    <!-- </footer> -->
-  </div>
-</div>
+<app-footer></app-footer>
+</body>

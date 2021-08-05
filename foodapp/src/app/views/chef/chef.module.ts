@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { EmployeesTodayOrderComponent } from './employees-today-order/employees-today-order.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { EmployeesTodayOrderComponent } from './employees-today-order/employees-
     AddComponent,
     EditComponent,
     DeleteComponent,
-    EmployeesTodayOrderComponent
+    EmployeesTodayOrderComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

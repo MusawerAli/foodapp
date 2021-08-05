@@ -1,17 +1,14 @@
 import { Injectable } from "@angular/core";
 import {
-  CanActivate,
-  CanActivateChild,
-  CanLoad,
-  Route,
-  UrlSegment,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-  Router,
+        CanActivate,
+        Route,
+        UrlSegment,
+        ActivatedRouteSnapshot,
+        RouterStateSnapshot,
+        UrlTree,
+        Router,
 } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
-
 import { Observable } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
 
@@ -21,9 +18,10 @@ import { AuthenticationService } from "./authentication.service";
 export class AuthGuard implements CanActivate {
    mappingUrl: any;
   constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService,private CookieService:CookieService
-  ) {}
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private CookieService:CookieService
+            ){}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
