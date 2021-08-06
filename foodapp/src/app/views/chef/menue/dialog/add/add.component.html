@@ -4,7 +4,7 @@
   </div>
   <div class="col">
     <!-- <span class="fa fa-close"  style="float: right;" (click)="closePopUp()"></span> -->
-    <form  class="pharmacy-order" [formGroup]="form" #categoryForm="ngForm" (submit)="addMenue(form.value)" >
+    <form  class="pharmacy-order" [formGroup]="form" #dataInput #categoryForm="ngForm" (submit)="addMenue(form.value)" >
       <mat-form-field class="example-full-width">
         <mat-label>Menue Name</mat-label>
         <input matInput formControlName="menue" required >
@@ -31,9 +31,8 @@
       <mat-form-field >
         <!-- <mat-label>file</mat-label> -->
         <input matInput >
-        <input #imageInput  formControlName="file" type="file" accept="image/*"   (change)="imageUpload(imageInput)">
+        <input #imageInput  formControlName="file" type="file" accept="image/*"   (change)="imageUpload($event)">
       </mat-form-field>
-      <!-- <input #imageInput formControlName="file" type="file" accept="image/*"   (change)="imageUpload(imageInput)">-->
     </form>
     <span>
 

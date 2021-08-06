@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ElementRef, Renderer2  } from '@angular/core';
+import { Component, OnInit,ViewChild,Renderer2  } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatTable } from '@angular/material/table';
@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import { ChefService } from 'src/services/chef/chef.service';
 import { AddComponent } from './dialog/add/add.component';
-import { inject } from '@angular/core/testing';
 import { MessageService } from 'src/services/message/message.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -41,12 +40,6 @@ export class MenueComponent implements OnInit {
               private cookieService:CookieService) { }
   ngOnInit(){
   }
-
-
-
-
- 
-
 
   
   getMenue(){

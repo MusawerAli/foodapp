@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { OrdersService } from 'src/services/orders/orders.service';
 import { MessageService } from 'src/services/message/message.service';
 import { CommonserviceService } from 'src/services/commonservice/commonservice.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-today-order',
   templateUrl: './today-order.component.html',
@@ -17,7 +17,7 @@ export class TodayOrderComponent implements OnInit {
   myDate = new Date();
   myOrders:any = []
 
-  constructor(private CookieService:CookieService,private OrdersService:OrdersService,private datePipe: DatePipe,private MessageService:MessageService,private commonService:CommonserviceService) {
+  constructor(private CookieService:CookieService,private OrdersService:OrdersService,private datePipe: DatePipe,private MessageService:MessageService,private commonService:CommonserviceService,private router:Router) {
     this.todayDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.myOrder();
   }
@@ -50,7 +50,8 @@ export class TodayOrderComponent implements OnInit {
       error => {
         this.MessageService.error('Warning','Something went wrong error 256');
         this.MessageService.cancelSound();
-
+        this.CookieService.deleteAll();
+        this.router.navigateByUrl('/auth');
 
       }
     );

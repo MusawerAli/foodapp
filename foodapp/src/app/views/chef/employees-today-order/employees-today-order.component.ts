@@ -4,6 +4,8 @@ import { DatePipe } from '@angular/common';
 import { CommonserviceService } from 'src/services/commonservice/commonservice.service';
 import { MessageService } from 'src/services/message/message.service';
 import { ChefService } from 'src/services/chef/chef.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-employees-today-order',
   templateUrl: './employees-today-order.component.html',
@@ -19,7 +21,9 @@ export class EmployeesTodayOrderComponent implements OnInit {
                private ChefService:ChefService,
                private datePipe: DatePipe,
                private commonService:CommonserviceService,
-               private MessageService:MessageService
+               private MessageService:MessageService,
+               private cookieService:CookieService,
+               private router:Router,
             ){
     this.todayDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.checkOrders();
@@ -43,6 +47,8 @@ export class EmployeesTodayOrderComponent implements OnInit {
       error => {
         this.MessageService.error('Warning','Something went wrong error 256');
         this.MessageService.cancelSound();
+        this.cookieService.deleteAll();
+        this.router.navigateByUrl('/auth');
       }
     );
   }

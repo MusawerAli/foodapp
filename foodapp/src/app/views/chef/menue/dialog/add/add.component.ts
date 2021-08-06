@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import {FormControl, Validators,FormGroup,FormBuilder} from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 // class imageSnippet {
 //   constructor(public src:string,public file:File) {
 
@@ -16,7 +16,8 @@ export class AddComponent implements OnInit {
   size:any=[];
   vendor:any=[];
   type:any=[];
-   form:FormGroup;
+  form:FormGroup;
+  file:any;
   createForm() {
     this.form = this.fb.group({
     menue :new FormControl('', Validators.required),
@@ -25,6 +26,7 @@ export class AddComponent implements OnInit {
     qty : new FormControl('', Validators.required),
     file : new FormControl(''),
     })
+    
   }
 
 
@@ -35,37 +37,42 @@ export class AddComponent implements OnInit {
 
 
 
-
+    
 
   ngOnInit(): void {
   }
 
   addMenue(form_value){
-
      this.dialogRef.close({action:'Add',data:form_value});
+     
   }
+  @ViewChild("dataInput") dataInput;
   //selectedFile:imageSnippet;
-
-  imageUpload(imageInput:any){
-    var files = imageInput.files[0];
-
-
-    if (files) {
-        var reader = new FileReader();
-
-        reader.onload =this.handleFile.bind(this);
-        reader.readAsBinaryString(files);
-
+  imageUpload(e){
+    debugger
+    this.file = e.target.files[0];
+    if(this.file){
     }
+    // this.form.patchValue({"file":this.files});
+    // console.log(this.createForm);
+
+    // if (this.file) {
+    //     var reader = new FileReader();
+
+    //     reader.onload =this.handleFile.bind(this);
+    //     reader.readAsBinaryString(this.file);
+
+    // }
   }
 
-    handleFile(event) {
-      var binaryString = event.target.result;
-            this.base64textString= btoa(binaryString);
+    // handleFile(file) {
+    //   let fileReader = new FileReader();
+    // fileReader.onload = (e) => {
+    //   console.log(fileReader.result);
+    // }
+    // fileReader.readAsText(this.file);
 
-             console.log(btoa(this.base64textString))
-
-    }
+    // }
     closePopUp(){
 
     }

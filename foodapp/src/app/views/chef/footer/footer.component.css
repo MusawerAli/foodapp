@@ -1,0 +1,29 @@
+footer {
+    text-align: center;
+    padding: 3px;
+    background-color: lightgray;
+    color: black;
+    /* margin-top: 10px; */
+  }
+  footer i{
+    padding: 3px;
+    font-size: large;
+  }
+  .facebook i:hover{
+   color: blue;
+  }
+  .instagram i:hover{
+    color: rgb(201, 16, 93);
+  }
+  .snapchat i:hover{
+    color:rgb(201, 201, 0);
+  }
+  .twitter i:hover{
+    color: #1da1f2;
+   }
+   .pinterest i:hover{
+    color: rgb(138, 3, 3);
+   }
+   .linkedin i:hover{
+   color: rgb(13, 13, 138);
+   }

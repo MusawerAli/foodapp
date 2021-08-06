@@ -127,13 +127,11 @@
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="registerForm.get('role').hasError('required')">Please choose a Role</mat-error>
-              <!-- <mat-hint>Please Select Category</mat-hint> -->
             </mat-form-field>
           </div>
 
           <div class="field-wrapper">
             <input [disabled]="!registerForm.valid" type="submit" >
-            <!-- <input type="submit" (click)="showThankYou()"> -->
           </div>
           <span class="singin" (click)="showLogin()">Already a user?  Sign in</span>
         </form>

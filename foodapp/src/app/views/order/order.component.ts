@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,AfterViewInit, Renderer2,TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit,AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
 import {FormControl, Validators,FormGroup,FormBuilder} from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { CommonserviceService } from 'src/services/commonservice/commonservice.service';
@@ -8,7 +8,6 @@ import { Router } from "@angular/router";
 import { OrdersService } from 'src/services/orders/orders.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import { DatePipe } from '@angular/common';
-
 import { ChefService } from 'src/services/chef/chef.service';
 @Component({
   selector: 'app-order',

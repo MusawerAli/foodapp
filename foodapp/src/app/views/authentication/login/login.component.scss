@@ -1,5 +1,5 @@
 // Dimensions
-$prism-height: 350px;
+$prism-height: 450px;
 $prism-length: 250px;
 $prism-depth: $prism-length;
 $spacing: 20px;
@@ -20,7 +20,6 @@ $green: #07ad90;
 
 body{
 
-  // font-family: Tahoma,Verdana,Segoe,sans-serif;
   font-size: 14px;
   background: #f6fffd;
   padding: $spacing;
@@ -29,7 +28,7 @@ body{
 .wrapper{
   width: $prism-length;
   height: $prism-height;
-  margin: 60px auto;
+  margin: 40px auto;
   perspective: 600px;
   text-align: left;
 }
@@ -54,6 +53,7 @@ body{
 
   .content{
     color: $text-dark;
+    
     h2{
       font-size: 1.2em;
       color: $green;
@@ -61,6 +61,7 @@ body{
     .field-wrapper{
       margin-top: $spacing*1.5;
       position: relative;
+      margin: 18px;
 
       label{
         position: absolute;
@@ -223,12 +224,12 @@ body{
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 20px;
+      // width: 20px;
       border-bottom: 1px solid $navy-blue;
       transition: all ease-in 0.25s;
     }
     &:hover:after{
-      width: 100%;
+      // width: 100%;
     }
   }
 }
