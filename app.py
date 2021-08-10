@@ -268,6 +268,19 @@ def orderBook(current_user):
 
     return jsonify({'message': 'Notification send to user.','code':200})
 
+@app.route('/myProfileEmployee', methods=['POST']) 
+@token_required
+def myProfileEmployee(current_user):
+     if request.method == 'POST':
+
+            data = {  
+            'id':current_user.id,
+            'contact' : current_user.contact,
+            'email' : current_user.email,
+            'user_name' : current_user.user_name, 
+            'order_list' : [{'id':i.id,'isBooked':i.isBooked,'isNoted':i.isNoted,'order':i.order,'remains':i.remains,'total':i.total,'order_details':{'order_details':[j.id for j in i.order_details]}} for i in current_user.orders], 
+            }
+            return jsonify({'message': 'Data Fetched','code':200,'data':data})
 
 
 @app.route('/createMenue', methods=['GET', 'POST']) 
