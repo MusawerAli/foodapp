@@ -6,10 +6,14 @@
 }
 .w3-top span a:hover{
     color:black;
+    opacity: 0.9;
 }
 .dropdown .btn{
     margin-top:9px;
-    margin-right: 16px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    background-color: white;
+    border: none;
 }
 .dropdown-menu a{
     border: none;
@@ -17,12 +21,21 @@
 }
 .logout{
     border: none;
-    width: 100%;
+    width: 95%;
     background-color: black;
     color: white;
     margin-top: 10px;
-    padding: 5px;
+    padding: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
 }
 .w3-card button:hover{
-    opacity: 0.7;
+    opacity: 0.8;
+}
+.closeMenu{
+    z-index: 1111;
+    left: 250px; 
+    font-size: 25px;
+    position: absolute;
 }

@@ -11,7 +11,8 @@ import { environment } from 'src/environments/environment';
 export class OrdersService {
 
   constructor(private http: HttpClient,
-    private getHeader: AuthheadersService) { }
+              private getHeader: AuthheadersService,
+              ) { }
 
     bookOrder(data):Observable<any>{
     return this.http.post(environment.apiUrl + ApiEndpoints.bookOrder,data,{ headers: this.getHeader.createAuthHeader()});
@@ -24,4 +25,7 @@ export class OrdersService {
   getMyOrder(data):Observable<any>{
     return this.http.post(environment.apiUrl + ApiEndpoints.getMyOrder,data,{ headers: this.getHeader.createAuthHeader()});
     }
+  userProfile():Observable<any>{
+    return this.http.post(environment.apiUrl + ApiEndpoints.myProfileEmployee,{},{ headers: this.getHeader.createAuthHeader()});
+  } 
 }

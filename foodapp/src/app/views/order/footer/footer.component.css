@@ -5,9 +5,13 @@ footer {
     color: black;
     /* margin-top: 10px; */
   }
+  footer p{
+    padding-top: 10px;
+  }
   footer i{
     padding: 3px;
     font-size: large;
+    padding-bottom: 15px;
   }
   .facebook i:hover{
    color: blue;

@@ -107,25 +107,25 @@ body{
           }
         }
       }
-      // input[type="submit"]{
-      //   -webkit-appearance: none;
-      //   appearance: none;
-      //   cursor: pointer;
-      //   width: 100%;
-      //   background: $green;
-      //   line-height: 2em;
-      //   color: $text-light;
-      //   border: 1px solid $green;
-      //   border-radius: $br;
-      //   padding: $spacing/4;
+      input[type="submit"]{
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        width: 100%;
+        background: $green;
+        line-height: 2em;
+        color: $text-light;
+        border: 1px solid $green;
+        border-radius: $br;
+        padding: $spacing/4;
 
-      //   &:hover{
-      //     opacity: 0.9;
-      //   }
-      //   &:active{
-      //     transform: scale(0.96);
-      //   }
-      // }
+        &:hover{
+          opacity: 0.9;
+        }
+        &:active{
+          transform: scale(0.96);
+        }
+      }
       input[type="submit"]{
         -webkit-appearance: none;
         appearance: none;

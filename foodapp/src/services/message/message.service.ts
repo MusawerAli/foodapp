@@ -51,7 +51,7 @@ export class MessageService {
       return {
           closeButton: true,
           timeOut: 5000,
-          // positionClass: 'toast-top-center'
+          positionClass: 'toast-bottom-right'
       };
   }
 }

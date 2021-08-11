@@ -32,12 +32,14 @@ export class MenueComponent implements OnInit {
   @ViewChild(MatTable,{static:true}) table: MatTable<any>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(public dialog: MatDialog,
+  constructor(
+              public dialog: MatDialog,
               private ChefService:ChefService,
               private MessageService:MessageService, 
               private router:Router,
               private renderer:Renderer2,
-              private cookieService:CookieService) { }
+              private cookieService:CookieService
+              ) { }
   ngOnInit(){
   }
 
@@ -109,6 +111,7 @@ export class MenueComponent implements OnInit {
 
     },
     error => {
+      // this.MessageService.cancelSound();
 
     //   if(error.status==422){
     //     console.log('errr',error);

@@ -37,6 +37,8 @@ export class OrderComponent implements OnInit,AfterViewInit {
   form:FormGroup;
   childtodayData:any=[];
   orderListDatails:any=[];
+  userProfileData:any;
+  userOrderList:any;
   config: any = { backdrop: "static", keyboard: false,};
   //total calculation of order function
   reducer = (acc, cur) => {
@@ -62,42 +64,46 @@ createForm() {
               private modalService: BsModalService,
               private fb: FormBuilder,
               private CookieService:CookieService,
-              private OrdersService:OrdersService,
+              private ordersService:OrdersService,
               private router:Router,
-              private MessageService:MessageService,
+              private messageService:MessageService,
               private datePipe: DatePipe,
               private CommonService:CommonserviceService,
               private ChefService:ChefService
   ) {
+
+    this.userProfile();
+
+
     this.local_cart = JSON.parse(localStorage.getItem('cart'));
     
     this.total = (this.local_cart!=null)?this.local_cart.reduce(this.reducer,0):0;
-    console.log(this.total)
+    // console.log(this.total)
     this.CommonService.todayChildMyOrder.subscribe((data) => {
       this.childtodayData = data;
-      console.warn('childtodayOrderData',data)
+      // console.warn('childtodayOrderData',data)
     })
     this.todayDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.createForm();
     this.order();
     this.menues = JSON.parse(localStorage.getItem('list_of_menues'));
      this.getMenue();
-     console.warn('this.childtodayData',this.childtodayData)
+    //  console.warn('this.childtodayData',this.childtodayData)
   }
   ngAfterViewInit(): void {
 
   }
   getMenue(){
-    this.OrdersService.getMenues().subscribe(
+    this.ordersService.getMenues().subscribe(
       (data) => {
-       console.log(data)
+      //  console.log(data)
         this.menues=data.list_of_menues;
         localStorage.setItem('list_of_menues',JSON.stringify(this.menues));
-                console.log(localStorage.getItem('list_of_menues'))
+                // console.log(localStorage.getItem('list_of_menues'))
       },
       error => {
-        this.MessageService.error('Warning','Session Expired');
-        this.MessageService.cancelSound();
+        this.messageService.error('Warning','Session Expired');
+        this.messageService.cancelSound();
         this.router.navigate(["/auth"]);
 
       }
@@ -136,13 +142,13 @@ createForm() {
       'total':this.total
     }
     this.spinnerService.show();
-  this.OrdersService.bookOrder(cart_data).subscribe((data)=>{
+  this.ordersService.bookOrder(cart_data).subscribe((data)=>{
    if(data.code==200){
      this.CommonService.getRefresh(true);
     this.spinnerService.hide();
     this.modalRef.hide();
-    this.MessageService.successSound();
-    this.MessageService.success('Success','Order Created Successfully.');
+    this.messageService.successSound();
+    this.messageService.success('Success','Order Created Successfully.');
    }
    },
    
@@ -150,8 +156,8 @@ createForm() {
      if(error.status==401){
       this.CookieService.delete('token');
       this.CookieService.delete('user_token');
-      this.MessageService.cancelSound();
-      this.MessageService.error('Error','Session Expired');
+      this.messageService.cancelSound();
+      this.messageService.error('Error','Session Expired');
       this.router.navigateByUrl('auth/login');
      }
 
@@ -209,8 +215,8 @@ createForm() {
       localStorage.setItem('value',menue.qty)
 
      }else{
-      this.MessageService.cancelSound();
-      this.MessageService.error('Error','your Today order are placed');
+      this.messageService.cancelSound();
+      this.messageService.error('Error','your Today order are placed');
      }
 
   }
@@ -265,12 +271,12 @@ createForm() {
   
      }
     else{
-      this.MessageService.cancelSound();
-      this.MessageService.error('Error','your Today order are placed');
+      this.messageService.cancelSound();
+      this.messageService.error('Error','your Today order are placed');
      }
     }else{
-      this.MessageService.cancelSound();
-      this.MessageService.error('Error','Minimum qty is 1');
+      this.messageService.cancelSound();
+      this.messageService.error('Error','Minimum qty is 1');
     }
   }
   getSum(array){
@@ -287,23 +293,42 @@ createForm() {
     let  data = {"from_date":"2021-07-26","to_date":"2021-08-02","type":"A","status":"A"}
     this.ChefService.checkOrders(data).subscribe(
       (data) => {
-       console.log(data.code)
+      //  console.log(data.code)
         if(data.code==200){
           this.orderListDatails=data.data;
         }else{
-          this.MessageService.error('Warning','Something went wrong error 255');
-          this.MessageService.cancelSound();
+          this.messageService.error('Warning','Something went wrong error 255');
+          this.messageService.cancelSound();
           // this.CookieService.deleteAll();
           // this.router.navigateByUrl('/auth');
         }
       },
       error => {
-        this.MessageService.error('Warning','Something went wrong error 256');
-        this.MessageService.cancelSound();
-        // this.CookieService.deleteAll();
-        // this.router.navigateByUrl('/auth');
+        this.messageService.error('Warning','Something went wrong error 256');
+        this.messageService.cancelSound();
+        this.CookieService.deleteAll();
+        this.router.navigateByUrl('/auth');
       }
     );
   }
+
+  
+
+  userProfile(){
+    this.ordersService.userProfile().subscribe(
+      (data)=>{
+        if(data.code!=undefined && data.code==200){
+          this.userProfileData = data.data;
+          this.userOrderList=data.data.order_list;
+        }        
+      },
+      error => {
+        this.messageService.error('Warning','Something went wrong error 256');
+        this.messageService.cancelSound();
+      }
+    )
+  } 
+
+
 
 }

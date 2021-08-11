@@ -29,7 +29,7 @@ const routes: Routes = [
 
   {
     path: "order",
-    // component: OrderComponent,
+    component: OrderComponent,
     canActivate: [AuthGuard],
     loadChildren: () =>
       import("./views/order/order.module").then(

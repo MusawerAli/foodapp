@@ -52,15 +52,13 @@
               <mat-select formControlName="role" required>
                 <mat-option mdInput >--</mat-option>
                 <mat-option mdInput *ngFor="let role of roles" #category [value]="role.id">
-                            {{ role.name}}
+                  {{ role.name}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="loginForm.get('role').hasError('required')">Please choose a Role</mat-error>
-              <!-- <mat-hint>Please Select Category</mat-hint> -->
             </mat-form-field>
           </div>
           <div class="field-wrapper">
-            <!-- <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Register</button> -->
             <input [disabled]="!loginForm.valid" type="submit" >
           </div>
           <span class="psw" (click)="showForgotPassword()">Forgot Password?   </span>
@@ -84,7 +82,7 @@
       </div>
     </div>
     <div class="face face-right">
-      <div class="content">
+      <div class="content" style="text-overflow: clip;">
         <h2>Sign up</h2>
         <form [formGroup]="registerForm"  (submit)="registerData(registerForm.value)">
           <div class="field-wrapper">

@@ -1,6 +1,5 @@
 <body class="w3-theme-l5">
   <app-header></app-header>
-
 <!-- Page Container -->
   <div class="w3-container w3-content w3-round" style=" opacity: 0.9; max-width:1400px;padding-top: 60px;background-color: #f1f1f1;">
     <!-- The Grid -->
@@ -47,6 +46,11 @@
           <p><strong>Hey!</strong></p>
           <p>Today i think you'll eat <span class="w3-tag">Bryani</span></p>
         </div>
+
+        <div class="w3-card w3-round w3-white w3-padding-16 w3-center ">
+          <p>ADS</p>
+        </div>
+        
 
         <!-- End Left Column -->
       </div>
@@ -130,8 +134,20 @@
             <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
           </div>
         </div>
-        <div class="w3-card w3-round w3-white w3-padding-16 w3-center mt-3">
-          <p>ADS</p>
+        <div class="w3-card w3-white w3-round w3-padding-16 mt-3 table-striped">
+          <h3 style="text-align: center;">Order History</h3>
+          <table style="margin: 10px;width: 90%;">
+            <thead>
+              <tr>
+              <th>Recent Orders</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr *ngFor="let order_list of userOrderList ">
+                <td>{{order_list.order}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <br>
       <!-- End Right Column -->

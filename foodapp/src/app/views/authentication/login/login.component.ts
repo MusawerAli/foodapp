@@ -127,7 +127,6 @@ export class LoginComponent implements OnInit {
 
     },
     error => {
-      debugger;
       this.MessageService.cancelSound();
       this.MessageService.error('Error','Email Already Exist.');
       // if(error.status==422){

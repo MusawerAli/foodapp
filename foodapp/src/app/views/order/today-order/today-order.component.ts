@@ -36,7 +36,6 @@ export class TodayOrderComponent implements OnInit {
     let  data = {"type":"T","from_date":this.todayDate,"to_date":this.todayDate}
     this.OrdersService.getMyOrder(data).subscribe(
       (data) => {
-       console.log(data.data)
       //  this.menues=
         if(data.code==200){
           this.myOrders=data.data[0];
