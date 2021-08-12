@@ -47,11 +47,11 @@ export class EmployeesTodayOrderComponent implements OnInit {
           this.MessageService.cancelSound();
         }
       },
-      () => {
+      error => {
         this.MessageService.error('Warning','Something went wrong error 256');
         this.MessageService.cancelSound();
-        this.cookieService.deleteAll();
-        this.router.navigateByUrl('/auth');
+        // this.cookieService.deleteAll();
+        // this.router.navigateByUrl('/auth');
       }
     );
   }

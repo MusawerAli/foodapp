@@ -50,8 +50,8 @@ export class HeaderComponent implements OnInit {
       error=>{
         this.messageService.error('warning','Something went wrong error 256');
         this.messageService.cancelSound();
-        this.cookieService.deleteAll();
-        this.router.navigateByUrl[('/auth')];
+        // this.cookieService.deleteAll();
+        // this.router.navigateByUrl[('/auth')];
       }
       )
   }
