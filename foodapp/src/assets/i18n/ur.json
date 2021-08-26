@@ -1,0 +1,55 @@
+{
+    "login":{
+        "title":"لاگ ان کریں",
+        "signUp":"سائن اپ" ,
+        "forgotPassword":"پاسورڈ بھول گے",
+        "subscribe":"سبسکرائب",
+        "contactUs":"ہم سے رابطہ کریں"
+    },    
+    "subscribe":{
+        "subscribe":"سبسکرائب",
+        "enterYourEmailSoWeCanSendYouTheLatestUpdates":"اپنا ای میل درج کریں تاکہ ہم آپ کو تازہ ترین اپ ڈیٹس بھیج سکیں۔",
+        "Email":"ای میل",
+        "submit":"جمع کرائیں"
+    },
+    "logIn":{
+        "signIn":"سائن ان",
+        "email":"ای میل",
+        "userNameIsRequired":"صارف کا نام درکار ہے ",
+        "password":"پاسورڈ",
+        "passwordIsRequied":"پاس ورڈ ضروری ہے",
+        "selectRole":"کردار منتخب کریں",
+        "pleaseChooseARole":"براہ کرم ایک کردار منتخب کریں",
+        "signUp":"صارف نہیں؟ سائن اپ کریں",
+        "submit":"جمع کرائیں",
+        "forgotPassword":"پاسورڈ بھول گے؟"
+     },
+     "password":{
+        "forgotPassword":"پاسورڈ بھول گے؟",
+        "enterResetEmail":"اپنا ای میل درج کریں تاکہ ہم آپ کو اپنے پاس ورڈ کے لیے ایک ری سیٹ لنک بھیج سکیں" ,
+        "email":"ای میل",
+        "submit":"جمع کرائیں"
+     },
+     "signUp":{
+        "signUp":"سائن اپ",
+        "userName":"صارف نام",
+        "userNameIsRequired":"صارف کا نام درکار ہے ",
+        "email":"ای میل",
+        "emailIsRequired":"ای میل درکار ہے",
+        "password":"پاس ورڈ",
+        "passwordIdRequired":"پاس ورڈ درکار ہے.",
+        "contact":"رابطہ کریں",
+        "contactIsRequired":"رابطہ درکار ہے",
+        "selectRole":"کردار منتخب کریں",
+        "submit":"جمع کرائیں",
+        "existingUser":"پہلے سے ہی ایک صارف؟ سائن ان"
+     },
+     "contact":{
+        "contactUs":"ہم سے رابطہ کریں",
+        "name":"نام",
+        "email":"ای میل",
+        "yourMessage":"آپ کا پیغام",
+        "submit":"جمع کرائیں"
+     }
+
+}

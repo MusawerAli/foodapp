@@ -1,5 +1,5 @@
 // Dimensions
-$prism-height: 450px;
+$prism-height: 480px;
 $prism-length: 250px;
 $prism-depth: $prism-length;
 $spacing: 20px;
@@ -19,7 +19,7 @@ $green: #07ad90;
 }
 
 body{
-
+  text-overflow: ellipsis;
   font-size: 14px;
   background: #f6fffd;
   padding: $spacing;
@@ -53,7 +53,6 @@ body{
 
   .content{
     color: $text-dark;
-    
     h2{
       font-size: 1.2em;
       color: $green;

@@ -1,0 +1,54 @@
+{   
+   "login":{
+      "title":"Login",
+      "signUp":"Sign up" ,
+      "forgotPassword":"Forgot password",
+      "subscribe":"Subscribe",
+      "contactUs":"Contact us"  
+  },
+  "subscribe":{
+   "subscribe":"Subscribe",
+   "enterYourEmailSoWeCanSendYouTheLatestUpdates":"Enter your email so we can send you the latest updates",
+   "Email":"Email",
+   "submit":"Submit"
+  },
+  "logIn":{
+     "signIn":"Sign In",
+     "email":"Email",
+     "userNameIsRequired":"User name is required",
+     "password":"Password",
+     "passwordIsRequied":"Password is requird",
+     "selectRole":"Select Role",
+     "pleaseChooseARole":"Please choose a role",
+     "signUp":"Not a user? Sign up",
+     "submit":"Submit",
+     "forgotPassword":"Forgot your password?"
+  },
+  "password":{
+   "forgotPassword":"Forgot your password?",
+   "enterResetEmail":"Enter your email so we can send you a reset link for your password" ,
+   "email":"Email",
+   "submit":"Submit"
+   },
+   "signUp":{
+      "signUp":"Sign up",
+      "userName":"Username",
+      "userNameIsRequired":"User name is required",
+      "email":"Email",
+      "emailIsRequired":"Email is required",
+      "password":"Password",
+      "passwordIdRequired":"Password is required.",
+      "contact":"Contact",
+      "contactIsRequired":"Contact is required",
+      "selectRole":"Select Role",
+      "submit":"Submit",
+      "existingUser":"Already a user?  Sign in"
+   },
+   "contact":{
+      "contactUs":"Contact us",
+      "name":"Name",
+      "email":"Email",
+      "yourMessage":"Your Mesaage",
+      "submit":"Submit"
+   }
+}

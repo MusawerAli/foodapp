@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthenticationService } from 'src/services/authentication/authentication.service';
 import { Router } from "@angular/router";
 import { MessageService } from 'src/services/message/message.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,16 @@ export class LoginComponent implements OnInit {
   ]
   loginForm:FormGroup;
   registerForm:FormGroup;
-  constructor(private fb: FormBuilder,private AuthenticationService:AuthenticationService,private CookieService:CookieService,private router:Router,private renderer: Renderer2,private MessageService:MessageService) {
+  constructor(private fb: FormBuilder,
+              private AuthenticationService:AuthenticationService,
+              private CookieService:CookieService,
+              private router:Router,
+              private renderer: Renderer2,
+              private MessageService:MessageService,
+              public translate:TranslateService,
+  ) {
+    translate.addLangs(['en','ur']);
+    translate.setDefaultLang('en');
     this.login();
     this.register();
     if(this.CookieService.check('user_token')==true){
@@ -30,6 +40,15 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+
+
+  switchLang(lang: string) {
+    document.body.setAttribute('dir', (lang=='en'?'ltr':'rtl'))
+   
+    this.translate.use(lang);
+  }
+  
+
   // @ViewChild("wrapper") private wrapper: ElementRef<HTMLElement>;
   public showLogin() {
 
